@@ -2,6 +2,7 @@
 	"files.associations": {
 		"fdf.h": "c",
 		"mlx42.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"mlx.h": "c"
 	}
 }

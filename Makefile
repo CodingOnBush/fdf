@@ -6,12 +6,13 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/12 10:30:02 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/12 10:47:52 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =			cc
-CFLAGS =		-Wall -Wextra -Werror 
+WFLAGS =		-Wall -Wextra -Werror
+MFLAGS =		$(WFLAGS) -Lmlx_linux -L/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 NAME = 			fdf
 
@@ -29,13 +30,17 @@ OBJ =			$(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
 
 all: $(NAME)
 
+run: $(NAME)
+	@echo "Running..."
+	@./$(NAME)
+
 $(NAME): $(LIBS) $(OBJ)
 	@echo "Compiling..."
-	@$(CC) $(CFLAGS) -Lmlx_linux -L/lib -Imlx_linux -lXext -lX11 -lm -lz -I$(INCDIR) $(OBJ) $(LIBS) -o $(NAME)
+	@$(CC) $(MFLAGS) -I$(INCDIR) $(OBJ) $(LIBS) -o $(NAME)
 
 $(BINDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(INCDIR) -Imlx_linux -O3 -c $< -o $@
+	@$(CC) $(WFLAGS) -I$(INCDIR) -Imlx_linux -O3 -c $< -o $@
 
 $(LIBS):
 	@echo "LIBS compiling..."
