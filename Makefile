@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
+#    Updated: 2024/01/12 09:29:17 by momrane          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC =			cc
 CFLAGS =		-Wall -Wextra -Werror
 
@@ -16,7 +28,8 @@ OBJ =			$(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBS)
+$(NAME): $(LIBS) $(OBJ)
+	@echo "Compiling..."
 	@$(CC) $(CFLAGS) -I$(INCDIR) $(OBJ) $(LIBS) -o $(NAME)
 
 $(BINDIR)/%.o: $(SRCDIR)/%.c
@@ -35,8 +48,8 @@ clean:
 	@make -sC ./lib/libft clean
 
 fclean: clean
-	@echo "Remove SERVER and CLIENT files..."
-	@rm -f $(SERVER) $(CLIENT) $(B_CLIENT)
+	@echo "Remove everything..."
+	@rm -f $(NAME)
 	@make -sC ./lib/ft_printf fclean
 	@make -sC ./lib/libft fclean
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 09:27:53 by momrane          ###   ########.fr       */
+/*   Created: 2023/11/18 13:41:48 by momrane           #+#    #+#             */
+/*   Updated: 2023/11/22 11:06:13 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
-# include "../lib/ft_printf/include/ft_printf.h"
-# include "../lib/libft/libft.h"
+#include "../include/ft_printf.h"
 
-#endif
+int	ft_putchar(char c)
+{
+	return (write(1, &c, 1));
+}

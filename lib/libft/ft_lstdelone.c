@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 09:27:53 by momrane          ###   ########.fr       */
+/*   Created: 2023/11/14 14:17:19 by momrane           #+#    #+#             */
+/*   Updated: 2024/01/02 10:55:23 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
-# include "../lib/ft_printf/include/ft_printf.h"
-# include "../lib/libft/libft.h"
+#include "libft.h"
 
-#endif
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
+{
+	if (!lst || !(*del))
+		return ;
+	(del)(lst->content);
+	free(lst);
+}

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_print_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 09:27:53 by momrane          ###   ########.fr       */
+/*   Created: 2023/11/18 13:57:32 by momrane           #+#    #+#             */
+/*   Updated: 2023/11/27 13:38:03 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
-# include "../lib/ft_printf/include/ft_printf.h"
-# include "../lib/libft/libft.h"
+#include "../include/ft_printf.h"
 
-#endif
+int	ft_print_string(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (ft_print_string("(null)"));
+	while (s[i])
+		ft_putchar(s[i++]);
+	return (i);
+}

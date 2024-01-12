@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 09:27:53 by momrane          ###   ########.fr       */
+/*   Created: 2023/11/07 09:31:25 by momrane           #+#    #+#             */
+/*   Updated: 2023/11/07 09:38:44 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
-# include "../lib/ft_printf/include/ft_printf.h"
-# include "../lib/libft/libft.h"
-
-#endif
+int	ft_isalnum(int c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}
