@@ -3,6 +3,10 @@
 		"fdf.h": "c",
 		"mlx42.h": "c",
 		"stdlib.h": "c",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"ft_printf.h": "c",
+		"libft.h": "c",
+		"get_next_line.h": "c",
+		"unistd.h": "c"
 	}
 }

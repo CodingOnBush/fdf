@@ -6,12 +6,12 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/12 10:47:52 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/12 14:54:54 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =			cc
-WFLAGS =		-Wall -Wextra -Werror
+WFLAGS =		-Wall -Wextra -g #-Werror
 MFLAGS =		$(WFLAGS) -Lmlx_linux -L/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 NAME = 			fdf
@@ -25,7 +25,9 @@ LIBFT =			./lib/libft/libft.a
 MLX =			./lib/mlx/libmlx.a
 LIBS =			$(PRINTF) $(LIBFT) $(MLX)
 
-SRC =			$(SRCDIR)/main.c
+SRC =			$(SRCDIR)/main.c $(SRCDIR)/parsing.c $(SRCDIR)/gnl/ft_gnl.c \
+				$(SRCDIR)/gnl/gnl_utils.c $(SRCDIR)/errors.c
+
 OBJ =			$(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
 
 all: $(NAME)
