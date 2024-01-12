@@ -6,12 +6,12 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/12 09:56:09 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/12 10:30:02 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC =			cc
-CFLAGS =		-Wall -Wextra -Werror
+CFLAGS =		-Wall -Wextra -Werror 
 
 NAME = 			fdf
 
@@ -21,7 +21,8 @@ SRCDIR = 		./src
 
 PRINTF =		./lib/ft_printf/libftprintf.a
 LIBFT =			./lib/libft/libft.a
-LIBS =			$(PRINTF) $(LIBFT)
+MLX =			./lib/mlx/libmlx.a
+LIBS =			$(PRINTF) $(LIBFT) $(MLX)
 
 SRC =			$(SRCDIR)/main.c
 OBJ =			$(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
@@ -30,16 +31,17 @@ all: $(NAME)
 
 $(NAME): $(LIBS) $(OBJ)
 	@echo "Compiling..."
-	@$(CC) $(CFLAGS) -I$(INCDIR) $(OBJ) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) -Lmlx_linux -L/lib -Imlx_linux -lXext -lX11 -lm -lz -I$(INCDIR) $(OBJ) $(LIBS) -o $(NAME)
 
 $(BINDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INCDIR) -Imlx_linux -O3 -c $< -o $@
 
 $(LIBS):
 	@echo "LIBS compiling..."
 	@make -sC ./lib/ft_printf all
 	@make -sC ./lib/libft all
+	@make -sC ./lib/mlx all
 
 clean:
 	@echo "Remove object files..."
@@ -52,6 +54,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@make -sC ./lib/ft_printf fclean
 	@make -sC ./lib/libft fclean
+	@make -sC ./lib/mlx clean
 
 re: fclean all
 
