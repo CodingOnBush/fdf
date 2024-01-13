@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/13 13:43:58 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:41:33 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 # include "get_next_line.h"
 # include "struct.h"
 # include <stdlib.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 void	ft_free_points(t_point **lst);
 void	ft_free_env(t_env **env);
 
-int		ft_init_env(t_env **env, char *filename);
+int	ft_init_env(t_env **env, int ac, char **av);
 void	ft_error(char *str);
 
 t_point	*ft_new_point(int x, int y, int z, int color);

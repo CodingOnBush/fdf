@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/13 13:55:43 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:28:43 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,17 @@ static t_point	*ft_create_points(int fd)
 	return (lst);
 }
 
-int	ft_init_env(t_env **env, char *filename)
+int	ft_init_env(t_env **env, int ac, char **av)
 {
 	int	fd;
 
+	if (ac != 2)
+		return (0);
+	*env = (t_env *)malloc(sizeof(t_env));
 	if (!(*env))
 		return (0);
-	(*env)->filename = filename;
-	fd = open(filename, O_RDONLY);
+	(*env)->filename = av[1];
+	fd = open((*env)->filename, O_RDONLY);
 	if (fd < 0)
 		return (0);
 	(*env)->lst = ft_create_points(fd);
