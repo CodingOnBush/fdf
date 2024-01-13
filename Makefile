@@ -6,7 +6,7 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/12 14:54:54 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/13 13:54:13 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ MLX =			./lib/mlx/libmlx.a
 LIBS =			$(PRINTF) $(LIBFT) $(MLX)
 
 SRC =			$(SRCDIR)/main.c $(SRCDIR)/parsing.c $(SRCDIR)/gnl/ft_gnl.c \
-				$(SRCDIR)/gnl/gnl_utils.c $(SRCDIR)/errors.c
+				$(SRCDIR)/gnl/gnl_utils.c $(SRCDIR)/errors.c $(SRCDIR)/point.c \
+				$(SRCDIR)/free.c
 
 OBJ =			$(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
 

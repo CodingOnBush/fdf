@@ -6,208 +6,101 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 15:17:37 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/13 13:55:43 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-static int	ft_count_lines(char *file)
+static int	ft_get_color(char *str)
 {
-	char	*line;
-	int		fd;
-	int		out;
+	char	*substr;
+	int		i;
+	int		nb;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	nb = 0;
+	i = 0;
+	substr = ft_strchr(str, ',');
+	if (substr == NULL)
 		return (0);
-	out = 0;
-	while (1)
+	substr++;
+	while (substr[i])
 	{
-		line = ft_gnl(fd);
-		if (!line)
-			break ;
-		out++;
-		free(line);
+		if (substr[i] >= 'A' && substr[i] <= 'F')
+			nb = nb * 16 + (substr[i] - 'A' + 10);
+		else if (substr[i] >= 'a' && substr[i] <= 'f')
+			nb = nb * 16 + (substr[i] - 'a' + 10);
+		else
+			nb = nb * 16 + (substr[i] - '0');
+		i++;
 	}
-	close(fd);
-	ft_printf("row number : %d\n", out);
-	return (out);
+	return (nb);
 }
 
-// t_point	**ft_new_map(char *file)
-// {
-// 	t_point	**new_map;
-// 	int		row;
-
-// 	row = ft_count_lines(file);
-// 	if (row == 0)
-// 		return (NULL);
-// 	new_map = (t_point **)malloc((row + 1) * sizeof(t_point *));
-// 	if (!new_map)
-// 		return (NULL);
-// 	new_map[row] = NULL;
-// 	return (new_map);
-// }
-
-// static int	ft_atoi_base(char *str, int base)
-// {
-// 	int	out;
-// 	int	sign;
-
-// 	out = 0;
-// 	sign = 1;
-// 	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\v'
-// 		|| *str == '\f' || *str == '\r')
-// 		str++;
-// 	if (*str == '-')
-// 		sign = -1;
-// 	if (*str == '-' || *str == '+')
-// 		str++;
-// 	if (base == 16 && *str == '0' && *(str + 1) == 'x')
-// 		str += 2;
-// 	while ((*str >= '0' && *str <= '9') || (*str >= 'A' && *str <= 'F')
-// 		|| (*str >= 'a' && *str <= 'f'))
-// 	{
-// 		if (*str >= '0' && *str <= '9')
-// 			out = out * base + *str - '0';
-// 		else if (*str >= 'A' && *str <= 'F')
-// 			out = out * base + *str - 'A' + 10;
-// 		else if (*str >= 'a' && *str <= 'f')
-// 			out = out * base + *str - 'a' + 10;
-// 		str++;
-// 	}
-// 	return (out * sign);
-// }
-
-// static void	ft_fill_row(int row, t_point **map, char *line)
-// {
-// 	char	**split;
-// 	int		j;
-
-// 	split = ft_split(line, ' ');
-// 	if (!split)
-// 		return ;
-// 	map[row] = (t_point *)malloc(ft_strlen(split[0]) * sizeof(t_point));
-// 	if (!(map[row]))
-// 		return ;
-// 	j = 0;
-// 	while (split[j])
-// 	{
-// 		map[row][j].x = j;
-// 		map[row][j].y = row;
-// 		map[row][j].z = ft_atoi(split[j]);
-// 		if (ft_strchr(split[j], ',') != NULL)
-// 			map[row][j].color = ft_atoi_base(ft_strchr(split[j], ',') + 1, 16);
-// 		else
-// 			map[row][j].color = 0xFFFFFF;
-// 		j++;
-// 	}
-// }
-
-// static t_point	**ft_read_map(char *file)
-// {
-// 	char	*line;
-// 	int		fd;
-// 	t_point	**map;
-// 	int		row;
-
-// 	fd = open(file, O_RDONLY);
-// 	if (fd < 0)
-// 		return (NULL);
-// 	map = ft_new_map(file);
-// 	if (!map)
-// 		return (NULL);
-// 	row = 0;
-// 	while (1)
-// 	{
-// 		line = ft_gnl(fd);
-// 		if (!line)
-// 			break ;
-// 		ft_fill_row(row, map, line);
-// 		row++;
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	return (NULL);
-// }
-
-static int	ft_count_words(const char *str, char sep)
+static int	ft_handle_line(char *line, int row, t_point **lst)
 {
-	int	out;
-
-	out = 0;
-	while (*str)
-	{
-		while (*str == sep)
-			str++;
-		if (*str != sep && *str != '\0' && *str != '\n')
-			out++;
-		while (*str != sep && *str != '\0')
-			str++;
-	}
-	return (out);
-}
-
-static int	ft_count_max_col(char *file)
-{
-	char	*line;
-	int		fd;
-	int		out;
-	int		tmp;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	out = 0;
-	while (1)
-	{
-		line = ft_gnl(fd);
-		if (!line)
-			break ;
-		tmp = ft_count_words(line, ' ');
-		if (tmp > out)
-			out = tmp;
-		free(line);
-	}
-	close(fd);
-	ft_printf("col number : %d\n", out);
-	return (out);
-}
-
-static void	ft_init_sizes(t_env **env)
-{
-	char	*line;
-	int		fd;
+	char	**split;
+	t_point	*new;
 	int		col;
-	int		tmp;
+	int		z;
+
+	split = ft_split(line, ' ');
+	if (!split)
+		return (0);
+	col = 0;
+	while (split[col] && ft_strchr(split[col], '\n') == NULL)
+	{
+		z = ft_atoi(split[col]);
+		new = ft_new_point(col, row, z, ft_get_color(split[col]));
+		if (!new)
+			return (0);
+		ft_add_point(lst, new);
+		col++;
+	}
+	col = 0;
+	while (split[col])
+		free(split[col++]);
+	free(split);
+	return (1);
+}
+
+static t_point	*ft_create_points(int fd)
+{
+	char	*line;
+	t_point	*lst;
 	int		row;
 
-	fd = open((*env)->filename , O_RDONLY);
-	if (fd < 0)
-		return ;
-	col = 0;
+	lst = NULL;
 	row = 0;
-	while (row++ > 0)
+	while (1)
 	{
 		line = ft_gnl(fd);
 		if (!line)
 			break ;
-		tmp = ft_count_words(line, ' ');
-		if (tmp > col)
-			col = tmp;
+		if (ft_handle_line(line, row, &lst) == 0)
+		{
+			ft_free_points(&lst);
+			return (NULL);
+		}
+		row++;
 		free(line);
 	}
-	close(fd);
-	(*env)->row = row;
-	(*env)->col = col;
+	return (lst);
 }
 
-int	ft_init_env(t_env **env)
+int	ft_init_env(t_env **env, char *filename)
 {
-	ft_init_sizes(env);
-	ft_printf("row : %d\n", (*env)->row);
-	ft_printf("col : %d\n", (*env)->col);
-	(*env)->map = NULL;
+	int	fd;
+
+	if (!(*env))
+		return (0);
+	(*env)->filename = filename;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	(*env)->lst = ft_create_points(fd);
+	close(fd);
+	if (!(*env)->lst)
+		return (0);
 	return (1);
 }
