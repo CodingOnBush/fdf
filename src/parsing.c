@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/13 15:28:43 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/14 15:51:40 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ft_get_color(char *str)
 	return (nb);
 }
 
-static int	ft_handle_line(char *line, int row, t_point **lst)
+static int	ft_handle_line(char *line, int row, t_env **env)
 {
 	char	**split;
 	t_point	*new;
@@ -54,55 +54,54 @@ static int	ft_handle_line(char *line, int row, t_point **lst)
 		new = ft_new_point(col, row, z, ft_get_color(split[col]));
 		if (!new)
 			return (0);
-		ft_add_point(lst, new);
+		ft_add_point(&(*env)->lst, new);
 		col++;
 	}
 	col = 0;
 	while (split[col])
 		free(split[col++]);
 	free(split);
+	(*env)->col = col;
 	return (1);
 }
 
-static t_point	*ft_create_points(int fd)
+static void	ft_create_points(t_env **env)
 {
 	char	*line;
-	t_point	*lst;
 	int		row;
+	int		fd;
 
-	lst = NULL;
+	fd = open((*env)->filename, O_RDONLY);
+	if (fd < 0)
+		return ;
+	(*env)->lst = NULL;
 	row = 0;
 	while (1)
 	{
 		line = ft_gnl(fd);
 		if (!line)
 			break ;
-		if (ft_handle_line(line, row, &lst) == 0)
+		if (ft_handle_line(line, row, env) == 0)
 		{
-			ft_free_points(&lst);
-			return (NULL);
+			ft_free_points(&(*env)->lst);
+			return ;
 		}
 		row++;
 		free(line);
 	}
-	return (lst);
+	(*env)->row = row;
+	close(fd);
 }
 
 int	ft_init_env(t_env **env, int ac, char **av)
 {
-	int	fd;
-
 	if (ac != 2)
 		return (0);
 	*env = (t_env *)malloc(sizeof(t_env));
 	if (!(*env))
 		return (0);
 	(*env)->filename = av[1];
-	fd = open((*env)->filename, O_RDONLY);
-	if (fd < 0)
-		return (0);
-	(*env)->lst = ft_create_points(fd);
-	close(fd);
+	ft_create_points(env);
 	if (!(*env)->lst)
 		return (0);
 	return (1);
