@@ -8,6 +8,7 @@
 		"libft.h": "c",
 		"get_next_line.h": "c",
 		"unistd.h": "c",
-		"struct.h": "c"
+		"struct.h": "c",
+		"x.h": "c"
 	}
 }

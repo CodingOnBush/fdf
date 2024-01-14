@@ -6,11 +6,11 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 07:52:08 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 14:21:31 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/14 13:31:11 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/fdf.h"
+#include "../inc/fdf.h"
 
 void	ft_update_lst(t_node **lst)
 {
@@ -89,6 +89,7 @@ char	*ft_create_str(t_node *lst)
 	if (!new)
 		return (NULL);
 	current = lst;
+	str = NULL;
 	while (current)
 	{
 		str = current->str;
@@ -96,7 +97,7 @@ char	*ft_create_str(t_node *lst)
 			*new++ = *str++;
 		current = current->next;
 	}
-	if (*str == '\n')
+	if (str != NULL && *str == '\n')
 		*new++ = *str++;
 	*new = '\0';
 	return (new - len);
