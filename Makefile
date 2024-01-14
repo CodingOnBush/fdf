@@ -6,7 +6,7 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/14 14:01:15 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/14 15:06:23 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ all: $(NAME)
 
 $(NAME): $(LIBS) $(OBJ)
 	@$(CC) $(HEADER) $(OBJ) $(LIBS) $(MINILIBX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)Fdf compiled!$(DEF_COLOR)"
 			
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCS)
 	@mkdir -p $(dir $@)
@@ -61,22 +62,17 @@ $(MINILIBX):
 	@echo "$(GREEN)Minilibx compiled!$(DEF_COLOR)"
 
 clean:
-	@make -sC $(FT_PRINTF_DIR) clean
-	@echo "$(CYAN)ft_printf object and dependency files cleaned.$(DEF_COLOR)"
-	@make -sC $(LIBFT_DIR) clean
-	@echo "$(CYAN)Libft object files cleaned.$(DEF_COLOR)"
-	@make -sC $(MINILIBX_DIR) clean
-	@echo "$(CYAN)Minilibx object files cleaned.$(DEF_COLOR)"	
 	@rm -rf $(OBJ_DIR)
-	@echo "$(CYAN)Fdf object files cleaned!$(DEF_COLOR)"
+	@make -sC $(FT_PRINTF_DIR) clean
+	@make -sC $(LIBFT_DIR) clean
+	@make -sC $(MINILIBX_DIR) clean
+	@echo "$(CYAN)Fdf, Minilibx, Libft and ft_printf object files cleaned!$(DEF_COLOR)"
 
 fclean: clean
-	@make -sC $(FT_PRINTF_DIR) fclean
-	@echo "$(CYAN)libftprintf.a LIB_DIR cleaned!$(DEF_COLOR)"
-	@make -sC $(LIBFT_DIR) fclean
-	@echo "$(CYAN)libft.a LIB_DIR cleaned!$(DEF_COLOR)"
 	@rm -f $(NAME)
-	@echo "$(CYAN)Fdf executable files cleaned!$(DEF_COLOR)"
+	@make -sC $(FT_PRINTF_DIR) fclean
+	@make -sC $(LIBFT_DIR) fclean
+	@echo "$(CYAN)libftprintf.a, libft.a and fdf cleaned!$(DEF_COLOR)"
 
 re: fclean $(NAME)
 	@echo "$(GREEN)Cleaned and rebuilt everything for Fdf!$(DEF_COLOR)"
