@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/14 13:34:43 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/14 20:34:41 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define FDF_H
 # include "../lib/ft_printf/include/ft_printf.h"
 # include "../lib/libft/libft.h"
-# include "../lib/mlx_linux/mlx.h"
+# include "../lib/mlx/mlx.h"
 # include "get_next_line.h"
 # include "struct.h"
-# include <X11/X.h>
-# include <X11/keysym.h>
+# include "/opt/X11/include/X11/X.h"
+# include "/opt/X11/include/X11/keysymdef.h"
+# include "/opt/X11/include/X11/keysym.h"
 # include <stdlib.h>
 
 void	ft_free_points(t_point **lst);

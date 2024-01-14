@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
+#    By: allblue <allblue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/14 15:06:23 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/14 20:47:21 by allblue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ CC				:= gcc
 CFLAGS			:= -g -O3 -Wall -Werror -Wextra
 FT_PRINTF_DIR	:= $(LIB_DIR)/ft_printf
 FT_PRINTF		:= $(FT_PRINTF_DIR)/libftprintf.a
-MINILIBX_DIR	:= $(LIB_DIR)/mlx_linux
+MINILIBX_DIR	:= $(LIB_DIR)/mlx
 MINILIBX		:= $(MINILIBX_DIR)/libmlx.a
-MINILIBX_FLAGS	:= -Lmlx_linux -L/$(LIB_DIR) -Imlx_linux -lXext -lX11 -lm -lz
+# MLX_LINUX		:= -Lmlx_linux -L/$(LIB_DIR) -Imlx -lXext -lX11 -lm -lz
+MLX_MAC			:= -Lmlx -L./lib/mlx -lm -lz -framework OpenGL -framework AppKit
 LIBFT_DIR		:= $(LIB_DIR)/libft
 LIBFT			:= $(LIBFT_DIR)/libft.a
 LIBS 			:= $(FT_PRINTF) $(LIBFT) $(MINILIBX)
@@ -42,12 +43,13 @@ OBJ				= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
 all: $(NAME)
 
 $(NAME): $(LIBS) $(OBJ)
-	@$(CC) $(HEADER) $(OBJ) $(LIBS) $(MINILIBX_FLAGS) -o $(NAME)
+	@$(CC) $(HEADER) $(OBJ) $(LIBS) $(MLX_MAC) -o $(NAME)
 	@echo "$(GREEN)Fdf compiled!$(DEF_COLOR)"
 			
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INCS)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(HEADER) -Imlx_linux -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) $(HEADER) -Imlx -O3 -c $< -o $@
+# @$(CC) $(CFLAGS) $(HEADER) -Imlx_linux -O3 -c $< -o $@
 
 $(LIBFT):
 	@make -sC $(LIBFT_DIR)

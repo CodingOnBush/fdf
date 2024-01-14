@@ -13,10 +13,14 @@
 
 INC	=%%%%
 
+UNAME = $(shell uname)
 CC	= gcc
+ifeq ($(UNAME),FreeBSD)
+	CC = clang
+endif
 
 NAME		= libmlx.a
-AR			= ar -rcs
+NAME_UNAME	= libmlx_$(UNAME).a
 
 SRC	= mlx_init.c mlx_new_window.c mlx_pixel_put.c mlx_loop.c \
 	mlx_mouse_hook.c mlx_key_hook.c mlx_expose_hook.c mlx_loop_hook.c \
@@ -38,12 +42,25 @@ all	: $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME)	: $(OBJ)
-	@$(AR) $(NAME) $(OBJ)
+	ar -r $(NAME) $(OBJ)
+	ranlib $(NAME)
+	cp $(NAME) $(NAME_UNAME)
 
-clean:
-	@rm -rf $(OBJ_DIR)/ $(NAME) *~ core *.core
+check: all
+	@test/run_tests.sh
 
-.PHONY: all clean
+show:
+	@printf "NAME  		: $(NAME)\n"
+	@printf "NAME_UNAME	: $(NAME_UNAME)\n"
+	@printf "CC		: $(CC)\n"
+	@printf "CFLAGS		: $(CFLAGS)\n"
+	@printf "SRC		:\n	$(SRC)\n"
+	@printf "OBJ		:\n	$(OBJ)\n"
+
+clean	:
+	rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
+
+.PHONY: all check show clean
