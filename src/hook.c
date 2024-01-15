@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 13:54:38 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 14:28:07 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int	ft_cross_hook(t_env *env)
 int	ft_key_hook(int keycode, t_env *env)
 {
 	if (keycode == XK_Escape)
+	{
 		ft_free_everything(env);
-	exit(0);
+		exit(0);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/15 13:49:55 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/15 14:38:35 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FT_PRINTF_DIR	:= $(LIB_DIR)/ft_printf
 FT_PRINTF		:= $(FT_PRINTF_DIR)/libftprintf.a
 MINILIBX_DIR	:= $(LIB_DIR)/mlx
 MINILIBX		:= $(MINILIBX_DIR)/libmlx.a
-MLX_LINUX		:= -Lmlx_linux -L/$(LIB_DIR) -Imlx -lXext -lX11 -lm -lz
+MLX_LINUX		:= -Lmlx -L/$(LIB_DIR) -Imlx -lXext -lX11 -lm -lz
 LIBFT_DIR		:= $(LIB_DIR)/libft
 LIBFT			:= $(LIBFT_DIR)/libft.a
 LIBS 			:= $(FT_PRINTF) $(LIBFT) $(MINILIBX)

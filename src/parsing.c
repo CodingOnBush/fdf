@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 13:51:32 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 15:07:10 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,22 @@ static void	ft_reset_env(t_env **env)
 {
 	(*env)->mlx = NULL;
 	(*env)->win = NULL;
-	(*env)->img = NULL;
 	(*env)->row = 0;
 	(*env)->col = 0;
-	(*env)->width = 1800;
-	(*env)->height = 900;
+	(*env)->width = 1526;// 1920 * 0.8
+	(*env)->height = 864;// 1080 * 0.8
 	(*env)->lst = NULL;
+	(*env)->img.img_ptr = NULL;
+	(*env)->img.img_pixels_ptr = NULL;
+	(*env)->img.bits_per_pixel = 0;
+	(*env)->img.endian = 0;
+	(*env)->img.line_len = 0;
 }
 
 void	ft_init_env(t_env **env, int ac, char **av)
 {
 	if (ac != 2)
-		ft_exit_error("wrong nb of arg");;
+		ft_exit_error("wrong nb of arg");
 	*env = (t_env *)malloc(sizeof(t_env));
 	if (!(*env))
 		ft_exit_error("env malloc failed");

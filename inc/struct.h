@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 12:54:34 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 14:55:55 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 typedef struct s_img
 {
-	void			*img;
-	char			*addr;
+	void			*img_ptr;
+	char			*img_pixels_ptr;
 	int				bits_per_pixel;
-	int				line_length;
 	int				endian;
+	int				line_len;
 }					t_img;
 
 typedef struct s_point
@@ -41,7 +41,7 @@ typedef struct s_env
 	int				width;
 	int				height;
 	struct s_point	*lst;
-	struct s_img	*img;
+	struct s_img	img;
 }					t_env;
 
 #endif

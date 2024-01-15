@@ -9,6 +9,8 @@
 		"get_next_line.h": "c",
 		"unistd.h": "c",
 		"struct.h": "c",
-		"x.h": "c"
+		"x.h": "c",
+		"keysym.h": "c",
+		"keysymdef.h": "c"
 	}
 }
