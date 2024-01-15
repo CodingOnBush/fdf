@@ -6,26 +6,23 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:43 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 10:38:43 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 11:09:25 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-// static void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
-// {
-// 	int	offset;
+static void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	int	offset;
 
-// 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
-// 	offset = (img->line_length * y) + (x * (img->bits_per_pixel / 8));
+	offset = (img->line_length * y) + (x * (img->bits_per_pixel / 8));
+	*((unsigned int *)(offset + img->addr)) = color;
+	// char	*dst;
 
-// 	*((unsigned int *)(offset + img->addr)) = color;
-// 	// char	*dst;
-
-// 	// dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel
-// / 8));
-// 	// *(unsigned int *)dst = color;
-// }
+	// dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel/ 8));
+	// *(unsigned int *)dst = color;
+}
 
 static int	ft_key_hook(int keycode, t_env *env)
 {
@@ -39,29 +36,32 @@ static int	ft_key_hook(int keycode, t_env *env)
 	return (0);
 }
 
-// static void	ft_put_pixels(t_env *env)
-// {
-// 	t_point	*tmp;
+static void	ft_put_pixels(t_env *env)
+{
+	t_point	*tmp;
 
-// 	tmp = env->lst;
-// 	while (tmp)
-// 	{
-// 		my_mlx_pixel_put(&env->img, (tmp->x)*10, (tmp->y)*10, 0x00FFFFFF);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = env->lst;
+	while (tmp)
+	{
+		my_mlx_pixel_put(&env->img, (tmp->x)*10, (tmp->y)*10, 0x00FFFFFF);
+		tmp = tmp->next;
+	}
+}
 
-// static void	ft_draw_fdf(t_env *env)
-// {
-// 	// put pixels
-// 	// draw lines
-// 	(void)env;
-// }
+static void	ft_draw_fdf(t_env *env)
+{
+	env->img.img = mlx_new_image(env->mlx, 1000, 1000);
+	env->img.addr = mlx_get_data_addr(env->img.img, &env->img.bits_per_pixel, &env->img.line_length, &env->img.endian);
+	ft_put_pixels(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img.img, 0, 0);
+}
 
 // static int	ft_render(t_env *env)
 // {
-// 	ft_draw_fdf(env);
-// 	mlx_put_image_to_window(env->mlx, env->win, env->img.img, 0, 0);
+// 	(void)env;
+// 	ft_printf("render\n");
+// 	// ft_draw_fdf(env);
+// 	// mlx_put_image_to_window(env->mlx, env->win, env->img.img, 0, 0);
 // 	return (0);
 // }
 
@@ -96,6 +96,8 @@ int	main(int ac, char **av)
 		ft_error("Error: mlx_new_window failed");
 	}
 	// mlx_hook(env->win, 17, 0, ft_close_cross, &env);
+	// mlx_loop_hook(env->mlx, ft_render, &env);
+	// ft_draw_fdf(env);
 	mlx_key_hook(env->win, ft_key_hook, env);
 	mlx_loop(env->mlx);
 	return (0);

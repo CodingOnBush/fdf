@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:42:49 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 10:33:02 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 11:10:39 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	ft_free_points(t_point **lst)
 
 void ft_free_env(t_env **env)
 {
-	t_point	*tmp;
-
 	if (*env == NULL)
 		return ;
 	if ((*env)->mlx != NULL)
@@ -37,11 +35,7 @@ void ft_free_env(t_env **env)
 		mlx_destroy_display((*env)->mlx);
 		free((*env)->mlx);
 	}
-	while ((*env)->lst)
-	{
-		tmp = (*env)->lst->next;
-		free((*env)->lst);
-		(*env)->lst = tmp;
-	}
+	if ((*env)->lst != NULL)
+		ft_free_points(&(*env)->lst);
 	free(*env);
 }
