@@ -6,14 +6,14 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 14:49:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/13 12:50:18 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:39:52 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-void	ft_error(char *str)
+void	ft_exit_error(char *str)
 {
-	ft_printf("%s\n", str);
+	ft_printf("Error: %s\n", str);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/15 09:03:30 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/15 13:49:55 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ GREEN 			= \033[0;92m
 CYAN 			= \033[0;96m
 
 #Sources
-SRC_FILES 		= errors free ft_gnl gnl_utils main parsing point
+SRC_FILES 		= errors free ft_gnl gnl_utils main parsing point hook
 SRC 			= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
 OBJ				= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
 

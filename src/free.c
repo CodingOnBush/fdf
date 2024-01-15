@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:42:49 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 11:46:47 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:25:13 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,21 @@ void	ft_free_points(t_point **lst)
 	}
 }
 
-void ft_free_env(t_env **env)
+void	ft_free_everything(t_env *env)
 {
-	if (*env == NULL)
-		return ;
-	if ((*env)->lst != NULL)
-		ft_free_points(&(*env)->lst);
-	free(*env);
+	if (env)
+	{
+		if (env->mlx)
+		{
+			if (env->win)
+				mlx_destroy_window(env->mlx, env->win);
+			if (env->img != NULL && env->img->img)
+				mlx_destroy_image(env->mlx, env->img->img);
+			mlx_destroy_display(env->mlx);
+			free(env->mlx);
+		}
+		if (env->lst != NULL)
+			ft_free_points(&env->lst);
+		free(env);
+	}
 }

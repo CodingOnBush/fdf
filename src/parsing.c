@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 12:24:47 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 13:51:32 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,43 @@ static void	ft_create_points(t_env **env)
 	close(fd);
 }
 
-int	ft_init_env(t_env **env, int ac, char **av)
+static void	ft_reset_env(t_env **env)
 {
-	if (ac != 2)
-		return (0);
-	*env = (t_env *)malloc(sizeof(t_env));
-	if (!(*env))
-		return (0);
-	(*env)->filename = av[1];
 	(*env)->mlx = NULL;
 	(*env)->win = NULL;
 	(*env)->img = NULL;
 	(*env)->row = 0;
 	(*env)->col = 0;
+	(*env)->width = 1800;
+	(*env)->height = 900;
 	(*env)->lst = NULL;
+}
+
+void	ft_init_env(t_env **env, int ac, char **av)
+{
+	if (ac != 2)
+		ft_exit_error("wrong nb of arg");;
+	*env = (t_env *)malloc(sizeof(t_env));
+	if (!(*env))
+		ft_exit_error("env malloc failed");
+	ft_reset_env(env);
+	(*env)->filename = av[1];
 	ft_create_points(env);
 	if (!(*env)->lst)
-		return (0);
-	return (1);
+	{
+		ft_free_everything(*env);
+		ft_exit_error("Error: parsing failed");
+	}
+	(*env)->mlx = mlx_init();
+	if (!((*env)->mlx))
+	{
+		ft_free_everything(*env);
+		ft_exit_error("Error: mlx_init failed");
+	}
+	(*env)->win = mlx_new_window((*env)->mlx, (*env)->width, (*env)->height, "Hello world!");
+	if (!((*env)->win))
+	{
+		ft_free_everything(*env);
+		ft_exit_error("Error: mlx_new_window failed");
+	}
 }
