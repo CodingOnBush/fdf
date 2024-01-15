@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:42:49 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/13 15:34:16 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 10:33:02 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void ft_free_env(t_env **env)
 {
 	t_point	*tmp;
 
-	if (!env || !*env)
+	if (*env == NULL)
 		return ;
-	if ((*env)->mlx)
+	if ((*env)->mlx != NULL)
 	{
+		if ((*env)->win != NULL)
+			mlx_destroy_window((*env)->mlx, (*env)->win);
 		mlx_destroy_display((*env)->mlx);
 		free((*env)->mlx);
 	}

@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 09:00:35 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 10:12:02 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 void	ft_free_points(t_point **lst);
 void	ft_free_env(t_env **env);

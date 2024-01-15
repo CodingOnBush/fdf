@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:04:12 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/12 12:54:56 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 09:38:27 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 4096
 # endif
 
 # include <unistd.h>
