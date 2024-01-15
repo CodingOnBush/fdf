@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/14 15:51:40 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 12:24:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,12 @@ int	ft_init_env(t_env **env, int ac, char **av)
 	if (!(*env))
 		return (0);
 	(*env)->filename = av[1];
+	(*env)->mlx = NULL;
+	(*env)->win = NULL;
+	(*env)->img = NULL;
+	(*env)->row = 0;
+	(*env)->col = 0;
+	(*env)->lst = NULL;
 	ft_create_points(env);
 	if (!(*env)->lst)
 		return (0);

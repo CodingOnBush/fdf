@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/14 15:50:03 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/15 12:23:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_env
 	int				row;
 	int				col;
 	struct s_point	*lst;
-	struct s_img	img;
+	struct s_img	*img;
 }					t_env;
 
 #endif
