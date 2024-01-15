@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/14 20:34:41 by allblue          ###   ########.fr       */
+/*   Updated: 2024/01/15 09:00:35 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 # include "../lib/mlx/mlx.h"
 # include "get_next_line.h"
 # include "struct.h"
-# include "/opt/X11/include/X11/X.h"
-# include "/opt/X11/include/X11/keysymdef.h"
-# include "/opt/X11/include/X11/keysym.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <stdlib.h>
 
 void	ft_free_points(t_point **lst);
