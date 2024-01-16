@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 15:06:40 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 15:37:06 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 # include "struct.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <math.h>
 
-void	ft_free_everything(t_env *env);
+void		ft_free_everything(t_env *env);
 
-t_env	ft_init_env(t_parsing data);
-void	ft_exit_error(char *str);
+t_env		ft_init_env(t_parsing data);
+void		ft_exit_error(char *str);
 
-void	ft_init_hooks(t_env *env);
+void		ft_trigger_hooks(t_env *env);
 
 t_parsing	ft_start_parsing(char *filename);
 
-void	ft_draw(t_env *env);
+int			ft_draw(t_env *env);
 
 #endif

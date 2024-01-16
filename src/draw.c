@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 13:24:23 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 16:27:21 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,51 @@
 
 static void	my_pixel_put(t_img *img, int x, int y, int color)
 {
-	int	offset;
+	int				offset;
+	unsigned int	*px;
 
-	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
-	*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
+	px = (unsigned int *)(img->img_pixels_ptr + offset);
+	*px = color;
 }
 
-void	ft_draw(t_env *env)
+static void	ft_prep_img(t_env *env)
 {
-	t_point	*pt;
-	int		sx;
-	int		sy;
+	env->img.bits_per_pixel = 32;
+	env->img.endian = 0;
+	env->img.line_len = env->width * 4;
+	env->img.img_ptr = mlx_new_image(env->mlx_ptr, env->width, env->height);
+	if (!env->img.img_ptr)
+		ft_exit_error("Error: mlx_new_image failed");
+	env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr,
+			&env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
+	if (!env->img.img_pixels_ptr)
+		ft_exit_error("Error: mlx_get_data_addr failed");
+}
 
-	pt = env->lst;
-	if (!pt)
-		return ;
-	while (pt)
+int	ft_draw(t_env *env)
+{
+	int	sx;
+	int	sy;
+	int	i;
+	int	j;
+
+	i = 0;
+	ft_prep_img(env);
+	while (i < env->data.row)
 	{
-		sx = pt->x + 10;
-		sy = pt->y;
-		my_pixel_put(&env->img, (sx + 1) * 200, (sy + 1) * 200, 0x00FF00);
-		pt = pt->next;
+		j = 0;
+		while (j < env->data.col)
+		{
+			sx = j + 10;
+			sy = i;
+			my_pixel_put(&env->img, (sx + 1) * 200, (sy + 1) * 200, rand()
+				% 0xFFFFFF);
+			j++;
+		}
+		i++;
 	}
+	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.img_ptr, 0, 0);
+	sleep(1);
+	return (0);
 }
