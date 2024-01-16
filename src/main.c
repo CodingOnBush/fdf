@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:43 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 15:05:19 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 11:43:12 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,35 @@ static void	color_screen(t_env *env, int color)
 
 static void	ft_draw(t_env *env)
 {
-	t_point	*points;
-	int		new_x;
-	int		new_y;
+	t_point	*pt;
+	int		sx;
+	int		sy;
 
-	points = env->lst;
-	if (!points)
+	pt = env->lst;
+	if (!pt)
 		return ;
-	while (points)
+	while (pt)
 	{
-		new_x = (points->x * env->width / env->col) * 0.7;
-		new_y = (points->y * env->height / env->row) * 0.7;
-		my_pixel_put(&env->img, new_x, new_y, 0xFFFFFF);
-		points = points->next;
+		sx = pt->x + 10;
+		sy = pt->y;
+		my_pixel_put(&env->img, (sx + 1) * 200, (sy + 1) * 200, 0x00FF00);
+		pt = pt->next;
 	}
 }
 
 int	main(int ac, char **av)
 {
+	// ft_start_parsing(ac, av);
 	t_env	*env;
 
 	ft_init_env(&env, ac, av);
 	ft_init_hooks(env);
+	
 	env->img.img_ptr = mlx_new_image(env->mlx, env->width, env->height);
-	env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr,
-			&env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
+	env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr, &env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
 	ft_draw(env);
-	mlx_put_image_to_window(env->mlx, env->win, env->img.img_ptr, (env->width / 2) - 500, (env->height / 2) - 300);
+	mlx_put_image_to_window(env->mlx, env->win, env->img.img_ptr, 0, 0);
+	
 	mlx_loop(env->mlx);
 	return (0);
 }

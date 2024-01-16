@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 15:07:10 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 10:49:42 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ static void	ft_reset_env(t_env **env)
 	(*env)->win = NULL;
 	(*env)->row = 0;
 	(*env)->col = 0;
-	(*env)->width = 1526;// 1920 * 0.8
-	(*env)->height = 864;// 1080 * 0.8
+	(*env)->width = 1526; // 1920 * 0.8
+	(*env)->height = 864; // 1080 * 0.8
 	(*env)->lst = NULL;
 	(*env)->img.img_ptr = NULL;
 	(*env)->img.img_pixels_ptr = NULL;
@@ -130,10 +130,140 @@ void	ft_init_env(t_env **env, int ac, char **av)
 		ft_free_everything(*env);
 		ft_exit_error("Error: mlx_init failed");
 	}
-	(*env)->win = mlx_new_window((*env)->mlx, (*env)->width, (*env)->height, "Hello world!");
+	(*env)->win = mlx_new_window((*env)->mlx, (*env)->width, (*env)->height,
+			"Hello world!");
 	if (!((*env)->win))
 	{
 		ft_free_everything(*env);
 		ft_exit_error("Error: mlx_new_window failed");
 	}
+}
+
+static int	ft_power(int nb, int power)
+{
+	int	i;
+	int	result;
+
+	i = 0;
+	result = 1;
+	while (i < power)
+	{
+		result *= nb;
+		i++;
+	}
+	return (result);
+}
+
+static void	ft_init_parsing(t_parsing *data)
+{
+	data->points = NULL;
+	data->row_cursor = 0;
+	data->col_cursor = 0;
+	data->max_row = 0;
+	data->max_col = 0;
+	data->r_power = 0;
+	data->c_power = 0;
+}
+
+static void	ft_extend_rows(t_parsing *data)
+{
+	data->r_power++;
+	
+}
+
+static void	ft_extend_cols(t_parsing *data)
+{
+	int len;
+	t_pt *new_row;
+	t_pt *old_row;
+
+	data->c_power++;
+	len = ft_power(2, data->c_power);
+	old_row = data->points[data->row_cursor];
+	new_row = (t_pt *)malloc(sizeof(t_pt) * len);
+	if (!new_row)
+		ft_exit_error("malloc failed");
+	ft_memcpy(new_row, old_row, sizeof(t_pt) * (len / 2));
+	free(old_row);
+	data->points[data->row_cursor] = new_row;
+}
+
+static void	ft_point_detected(t_parsing *data, char *line)
+{
+	int r;
+	int c;
+
+	c = data->col_cursor;
+	r = data->row_cursor;
+	data->max_col++;
+	if (data->points[r] == NULL)
+		ft_extend_cols(data);
+	data->points[r][c].x = c;
+	data->points[r][c].y = c;
+	data->points[r][c].z = ft_atoi(line);
+	if (ft_strchr("+-", *line))
+		line++;
+	while (ft_isdigit(*line))
+		line++;
+	if (*line == ',')
+	{
+		line += 3;
+		data->points[r][c].color = ft_get_color(line);
+		while (ft_isdigit(*line) || ft_strchr("abcdefABCDEF", *line))
+			line++;
+	}
+	else
+		data->points[r][c].color = 0x00FF00;
+	data->col_cursor++;
+	while (*line == ' ')
+		line++;
+}
+
+static void	ft_parse_line(t_parsing *data, char *line)
+{
+	if (!line)
+		return ;
+	ft_extend_rows(data);
+	ft_extend_cols(data);
+	while(*line)
+	{
+		if (ft_isdigit(*line) || ft_strchr("+-", *line))
+			ft_point_detected(data, line);
+		if (*line == '\0')
+		{
+			data->row_cursor++;
+			data->col_cursor = 0;
+		}
+	}
+}
+
+static void ft_cut_unused(t_parsing *data)
+{
+	(void)data;
+}
+
+void	ft_start_parsing(int ac, char **av)
+{
+	t_parsing	data;
+	int			fd;
+	char		*line;
+
+	if (ac != 2)
+		ft_exit_error("wrong nb of arg");
+	fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+		ft_exit_error("Error: open failed");
+	ft_init_parsing(&data);
+	while (1)
+	{
+		line = ft_gnl(fd);
+		if (!line)
+			break ;
+		ft_parse_line(&data, line);
+		free(line);
+		data.max_row++;
+	}
+	close(fd);
+	ft_cut_unused(&data);
+	ft_printf("max_row: %d\n", data.max_row);
 }
