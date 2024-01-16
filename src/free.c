@@ -6,39 +6,39 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:42:49 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 12:02:30 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 15:04:40 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-void	ft_free_points(t_point **lst)
+static void	ft_free_matrix(t_env *env)
 {
-	t_point	*tmp;
+	int	i;
 
-	while (*lst)
+	i = 0;
+	while (i < env->data.row)
 	{
-		tmp = (*lst)->next;
-		free(*lst);
-		*lst = tmp;
+		free(env->data.matrix[i]);
+		i++;
 	}
+	free(env->data.matrix);
 }
 
 void	ft_free_everything(t_env *env)
 {
 	if (env)
 	{
-		if (env->mlx)
+		if (env->mlx_ptr)
 		{
-			if (env->win)
-				mlx_destroy_window(env->mlx, env->win);
+			if (env->win_ptr)
+				mlx_destroy_window(env->mlx_ptr, env->win_ptr);
 			if (env->img.img_ptr)
-				mlx_destroy_image(env->mlx, env->img.img_ptr);
-			mlx_destroy_display(env->mlx);
-			free(env->mlx);
+				mlx_destroy_image(env->mlx_ptr, env->img.img_ptr);
+			mlx_destroy_display(env->mlx_ptr);
+			free(env->mlx_ptr);
 		}
-		if (env->lst != NULL)
-			ft_free_points(&env->lst);
-		free(env);
+		if (env->data.matrix)
+			ft_free_matrix(env);
 	}
 }

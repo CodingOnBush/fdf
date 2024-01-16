@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 12:02:49 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 14:57:23 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,19 @@ typedef struct s_parsing
 	struct s_pt		**matrix;
 	int				row;
 	int				col;
+	int				r;
+	int				c;
 	char			*filename;
 }					t_parsing;
 
 typedef struct s_env
 {
-	void			*mlx;
-	void			*win;
-	char			*filename;
-	int				row;
-	int				col;
-	int				width;
-	int				height;
-	struct s_point	*lst;
-	struct s_img	img;
+	void				*mlx_ptr;
+	void				*win_ptr;
+	int					width;
+	int					height;
+	struct s_parsing	data;
+	struct s_img		img;
 }					t_env;
 
 #endif
