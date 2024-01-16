@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 11:30:33 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 12:02:49 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,12 @@ typedef struct s_pt
 	int				color;
 }					t_pt;
 
-typedef struct s_px
-{
-	int				x;
-	int				y;
-	int				z;
-	int				color;
-}					t_px;
-
 typedef struct s_parsing
 {
-	t_pt			**matrix;
-	int				row_cursor;
-	int				col_cursor;
-	int				max_row;
-	int				max_col;
-	int				r_power;
-	int				c_power;
+	struct s_pt		**matrix;
+	int				row;
+	int				col;
+	char			*filename;
 }					t_parsing;
 
 typedef struct s_env

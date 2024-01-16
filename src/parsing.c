@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 10:49:42 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 12:08:23 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,107 +139,123 @@ void	ft_init_env(t_env **env, int ac, char **av)
 	}
 }
 
-static int	ft_power(int nb, int power)
-{
-	int	i;
-	int	result;
+// static int	ft_power(int nb, int power)
+// {
+// 	int	i;
+// 	int	result;
 
-	i = 0;
-	result = 1;
-	while (i < power)
-	{
-		result *= nb;
-		i++;
-	}
-	return (result);
-}
+// 	i = 0;
+// 	result = 1;
+// 	while (i < power)
+// 	{
+// 		result *= nb;
+// 		i++;
+// 	}
+// 	return (result);
+// }
 
 static void	ft_init_parsing(t_parsing *data)
 {
-	data->points = NULL;
-	data->row_cursor = 0;
-	data->col_cursor = 0;
-	data->max_row = 0;
-	data->max_col = 0;
-	data->r_power = 0;
-	data->c_power = 0;
+	data->matrix = NULL;
+	data->row = 0;
+	data->col = 0;
+	data->filename = NULL;
 }
 
-static void	ft_extend_rows(t_parsing *data)
+// static void	ft_point_detected(t_parsing *data, char *line)
+// {
+// 	int r;
+// 	int c;
+
+// 	c = data->col_cursor;
+// 	r = data->row_cursor;
+// 	data->max_col++;
+// 	if (data->points[r] == NULL)
+// 		ft_extend_cols(data);
+// 	data->points[r][c].x = c;
+// 	data->points[r][c].y = c;
+// 	data->points[r][c].z = ft_atoi(line);
+// 	if (ft_strchr("+-", *line))
+// 		line++;
+// 	while (ft_isdigit(*line))
+// 		line++;
+// 	if (*line == ',')
+// 	{
+// 		line += 3;
+// 		data->points[r][c].color = ft_get_color(line);
+// 		while (ft_isdigit(*line) || ft_strchr("abcdefABCDEF", *line))
+// 			line++;
+// 	}
+// 	else
+// 		data->points[r][c].color = 0x00FF00;
+// 	data->col_cursor++;
+// 	while (*line == ' ')
+// 		line++;
+// }
+
+// static void	ft_parse_line(t_parsing *data, char *line)
+// {
+// 	if (!line)
+// 		return ;
+// 	ft_extend_rows(data);
+// 	ft_extend_cols(data);
+// 	while(*line)
+// 	{
+// 		if (ft_isdigit(*line) || ft_strchr("+-", *line))
+// 			ft_point_detected(data, line);
+// 		if (*line == '\0')
+// 		{
+// 			data->row_cursor++;
+// 			data->col_cursor = 0;
+// 		}
+// 	}
+// }
+
+// static void ft_cut_unused(t_parsing *data)
+// {
+// 	(void)data;
+// }
+
+static int	ft_count_col(char *line)
 {
-	data->r_power++;
-	
-}
+	int	col;
 
-static void	ft_extend_cols(t_parsing *data)
-{
-	int len;
-	t_pt *new_row;
-	t_pt *old_row;
-
-	data->c_power++;
-	len = ft_power(2, data->c_power);
-	old_row = data->points[data->row_cursor];
-	new_row = (t_pt *)malloc(sizeof(t_pt) * len);
-	if (!new_row)
-		ft_exit_error("malloc failed");
-	ft_memcpy(new_row, old_row, sizeof(t_pt) * (len / 2));
-	free(old_row);
-	data->points[data->row_cursor] = new_row;
-}
-
-static void	ft_point_detected(t_parsing *data, char *line)
-{
-	int r;
-	int c;
-
-	c = data->col_cursor;
-	r = data->row_cursor;
-	data->max_col++;
-	if (data->points[r] == NULL)
-		ft_extend_cols(data);
-	data->points[r][c].x = c;
-	data->points[r][c].y = c;
-	data->points[r][c].z = ft_atoi(line);
-	if (ft_strchr("+-", *line))
-		line++;
-	while (ft_isdigit(*line))
-		line++;
-	if (*line == ',')
-	{
-		line += 3;
-		data->points[r][c].color = ft_get_color(line);
-		while (ft_isdigit(*line) || ft_strchr("abcdefABCDEF", *line))
-			line++;
-	}
-	else
-		data->points[r][c].color = 0x00FF00;
-	data->col_cursor++;
-	while (*line == ' ')
-		line++;
-}
-
-static void	ft_parse_line(t_parsing *data, char *line)
-{
-	if (!line)
-		return ;
-	ft_extend_rows(data);
-	ft_extend_cols(data);
-	while(*line)
+	col = 0;
+	while (*line)
 	{
 		if (ft_isdigit(*line) || ft_strchr("+-", *line))
-			ft_point_detected(data, line);
-		if (*line == '\0')
 		{
-			data->row_cursor++;
-			data->col_cursor = 0;
+			col++;
+			if (ft_strchr("+-", *line))
+				line++;
+			while (ft_isdigit(*line) || *line == ',')
+				line++;
 		}
+		else
+			line++;
 	}
+	return (col);
 }
 
-static void ft_cut_unused(t_parsing *data)
+static void	ft_set_matrix_size(t_parsing *data)
 {
-	(void)data;
+	char	*line;
+	int		fd;
+
+	fd = open(data->filename, O_RDONLY);
+	if (fd < 0)
+		ft_exit_error("Error: open failed");
+	line = ft_gnl(fd);
+	if (!line)
+		ft_exit_error("Error: empty file");
+	data->col = ft_count_col(line);
+	while (line)
+	{
+		data->row++;
+		free(line);
+		line = ft_gnl(fd);
+	}
+	close(fd);
 }
 
 void	ft_start_parsing(int ac, char **av)
@@ -250,20 +266,20 @@ void	ft_start_parsing(int ac, char **av)
 
 	if (ac != 2)
 		ft_exit_error("wrong nb of arg");
+	ft_init_parsing(&data);
+	data.filename = av[1];
+	ft_set_matrix_size(&data);
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
 		ft_exit_error("Error: open failed");
-	ft_init_parsing(&data);
 	while (1)
 	{
 		line = ft_gnl(fd);
 		if (!line)
 			break ;
-		ft_parse_line(&data, line);
+		ft_printf("%s", line);
 		free(line);
-		data.max_row++;
 	}
 	close(fd);
-	ft_cut_unused(&data);
-	ft_printf("max_row: %d\n", data.max_row);
+	ft_printf("\nrow: %d\ncol: %d\n", data.row, data.col);
 }

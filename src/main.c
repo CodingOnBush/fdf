@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:43 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 11:43:12 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/16 11:44:26 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ static void	ft_draw(t_env *env)
 
 int	main(int ac, char **av)
 {
-	// ft_start_parsing(ac, av);
-	t_env	*env;
+	ft_start_parsing(ac, av);
+	// t_env	*env;
 
-	ft_init_env(&env, ac, av);
-	ft_init_hooks(env);
+	// ft_init_env(&env, ac, av);
+	// ft_init_hooks(env);
 	
-	env->img.img_ptr = mlx_new_image(env->mlx, env->width, env->height);
-	env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr, &env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
-	ft_draw(env);
-	mlx_put_image_to_window(env->mlx, env->win, env->img.img_ptr, 0, 0);
+	// env->img.img_ptr = mlx_new_image(env->mlx, env->width, env->height);
+	// env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr, &env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
+	// ft_draw(env);
+	// mlx_put_image_to_window(env->mlx, env->win, env->img.img_ptr, 0, 0);
 	
-	mlx_loop(env->mlx);
+	// mlx_loop(env->mlx);
 	return (0);
 }
