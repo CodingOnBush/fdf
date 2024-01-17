@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 13:06:18 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:15:18 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 {
 	ft_printf("button: %d\n", button);
 	if (button == 4)
-		env->scale += 10;
+		env->scale += 4;
 	else if (button == 5)
-		env->scale -= 10;
+		env->scale -= 4;
 	ft_printf("x: %d\n", x);
 	ft_printf("y: %d\n", y);
 	return (0);

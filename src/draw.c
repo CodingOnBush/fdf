@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 13:08:50 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:14:45 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ static int	ft_get_new_x(t_env *env, int i, int j)
 	x = env->data.matrix[i][j].x;
 	y = env->data.matrix[i][j].y;
 	z = env->data.matrix[i][j].z;
-	new_x = ((x + 1) * env->scale) + (env->origin.x);
-	new_x -= ((env->data.row / 2) * env->scale) + env->scale;
-	
+	new_x = ((x + 1) * env->scale) + (env->origin.x) - env->scale;
+	new_x -= (env->data.col / 2) * env->scale;
 	return (new_x);
 }
 
@@ -88,8 +87,8 @@ static int	ft_get_new_y(t_env *env, int i, int j)
 	x = env->data.matrix[i][j].x;
 	y = env->data.matrix[i][j].y;
 	z = env->data.matrix[i][j].z;
-	new_y = ((y + 1) * env->scale) + (env->origin.y);
-	new_y -= ((env->data.col / 2) * env->scale) + env->scale;
+	new_y = ((y + 1) * env->scale) + (env->origin.y) - env->scale;
+	new_y -= (env->data.row / 2) * env->scale;
 	return (new_y);
 }
 
@@ -109,7 +108,7 @@ int	ft_draw(t_env *env)
 		{
 			x = ft_get_new_x(env, i, j);
 			y = ft_get_new_y(env, i, j);
-			if (x >= 0 && x < env->width && y >= 0 && y < env->height)
+			if (x >= 0 && x <= env->width && y >=0 && y <= env->height)
 				my_pixel_put(&env->img, x, y, 0xFFFFFF);
 			j++;
 		}
