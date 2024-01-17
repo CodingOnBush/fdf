@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 12:55:06 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:08:50 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int	ft_draw(t_env *env)
 {
 	int	i;
 	int	j;
+	int x;
+	int y;
 
 	i = 0;
 	ft_prep_img(env);
@@ -105,8 +107,10 @@ int	ft_draw(t_env *env)
 		j = 0;
 		while (j < env->data.col)
 		{
-			my_pixel_put(&env->img, ft_get_new_x(env, i, j), ft_get_new_y(env,
-					i, j), 0xFFFFFF);
+			x = ft_get_new_x(env, i, j);
+			y = ft_get_new_y(env, i, j);
+			if (x >= 0 && x < env->width && y >= 0 && y < env->height)
+				my_pixel_put(&env->img, x, y, 0xFFFFFF);
 			j++;
 		}
 		i++;

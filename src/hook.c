@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 12:59:35 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/17 13:06:18 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 
 void	ft_trigger_hooks(t_env *env)
 {
-	mlx_key_hook(env->win_ptr, ft_key_hook, env);
-	mlx_mouse_hook(env->win_ptr, ft_mouse_hook, env);
-	mlx_hook(env->win_ptr, 2, 1L << 0, ft_escape_hook, env);
-	mlx_hook(env->win_ptr, 17, 1L << 2, ft_cross_hook, env);
+	mlx_key_hook(env->win_ptr, ft_key_hook, env);//				keyboard
+	mlx_mouse_hook(env->win_ptr, ft_mouse_hook, env);//			mouse
+	mlx_hook(env->win_ptr, 2, 1L << 0, ft_escape_hook, env);//	XK_Escape
+	mlx_hook(env->win_ptr, 17, 1L << 2, ft_cross_hook, env);//	window cross
 }
