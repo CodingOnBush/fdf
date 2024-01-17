@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 14:57:23 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/17 12:28:53 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,13 @@ typedef struct s_env
 	void				*win_ptr;
 	int					width;
 	int					height;
+	int					x_offset;
+	int					y_offset;
+	int					z_offset;
+	int					angle;
+	int					zoom;
+	int					scale;
+	struct s_pt			origin;
 	struct s_parsing	data;
 	struct s_img		img;
 }					t_env;
