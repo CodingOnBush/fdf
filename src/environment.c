@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 12:28:46 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 09:57:03 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_env	ft_init_env(t_parsing data)
 	env.x_offset = width / 2;
 	env.y_offset = height / 2;
 	env.z_offset = 0;
-	env.angle = 0.5;
+	env.angle = 0.45;
 	env.zoom = 20;
 	env.origin.x = width / 2;
 	env.origin.y = height / 2;

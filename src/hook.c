@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 13:15:18 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 11:29:41 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int ft_key_hook(int keycode, t_env *env)
 	{
 		env->scale += 1;
 		mlx_clear_window(env->mlx_ptr, env->win_ptr);
-		ft_draw(env);
 	}
 	return (0);
 }
@@ -44,12 +43,16 @@ static int ft_key_hook(int keycode, t_env *env)
 static int ft_mouse_hook(int button, int x, int y, t_env *env)
 {
 	ft_printf("button: %d\n", button);
-	if (button == 4)
-		env->scale += 4;
-	else if (button == 5)
-		env->scale -= 4;
-	ft_printf("x: %d\n", x);
-	ft_printf("y: %d\n", y);
+	(void)x;
+	(void)y;
+	if (button == 4 || button == 5)
+	{
+		if (button == 4)
+			env->scale += 0.1;
+		else
+			env->scale -= 0.1;
+		ft_draw(env);
+	}
 	return (0);
 }
 

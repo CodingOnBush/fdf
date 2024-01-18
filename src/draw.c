@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/17 13:22:56 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 11:57:13 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ static void	my_pixel_put(t_img *img, int x, int y, int color)
 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
 	px = (unsigned int *)(img->img_pixels_ptr + offset);
 	*px = color;
-}
-
-static void	ft_prep_img(t_env *env)
-{
-	env->img.bits_per_pixel = 32;
-	env->img.endian = 0;
-	env->img.line_len = env->width * 4;
-	if (env->img.img_ptr != NULL)
-		mlx_destroy_image(env->mlx_ptr, env->img.img_ptr);
-	env->img.img_ptr = mlx_new_image(env->mlx_ptr, env->width, env->height);
-	if (!env->img.img_ptr)
-		ft_exit_error("Error: mlx_new_image failed");
-	env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr,
-			&env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
-	if (!env->img.img_pixels_ptr)
-		ft_exit_error("Error: mlx_get_data_addr failed");
 }
 
 // static void ft_draw_rectangle(t_env *env, int x, int y, int size, int color)
@@ -59,58 +43,101 @@ static void	ft_prep_img(t_env *env)
 // destination.x = source.x + cos(angle) * source.z
 // destination.y = source.y + sin(angle) * source.z
 
-static int	ft_get_new_x(t_env *env, int i, int j)
-{
-	int	new_x;
-	int	x;
-	int	y;
-	int	z;
 
-	(void)x;
-	(void)y;
-	(void)z;
-	x = env->data.matrix[i][j].x;
-	y = env->data.matrix[i][j].y;
-	z = env->data.matrix[i][j].z;
-	new_x = ((x + 1) * env->scale) + (env->origin.x) - env->scale;
-	// new_x -= (env->data.col / 2) * env->scale;
-	return (new_x);
+static void	ft_draw_line(t_env *env, t_pt a, t_pt b)
+{
+	float step;
+	float xin;
+	float yin;
+
+	if (((float)b.x - (float)a.x) >= ((float)b.y - (float)a.y))
+		step = fabs((float)b.x - (float)a.x);
+	else
+		step = fabs((float)b.y - (float)a.y);
+	xin = (b.x - a.x) / step;
+	yin = (b.y - a.y) / step;
+	a.x = a.x + 0.5;
+	a.y = a.y + 0.5;
+	while (step--)
+	{
+		if (a.x >= 0 && a.x <= env->width && a.y >= 0 && a.y <= env->height)
+			my_pixel_put(&env->img, a.x, a.y, 0xFFFFFF);
+		a.x = a.x + xin;
+		a.y = a.y + yin;
+	}
 }
 
-static int	ft_get_new_y(t_env *env, int i, int j)
-{
-	int	new_y;
-	int	x;
-	int	y;
-	int	z;
+/*
 
-	(void)x;
-	(void)y;
-	(void)z;
-	x = env->data.matrix[i][j].x;
-	y = env->data.matrix[i][j].y;
-	z = env->data.matrix[i][j].z;
-	new_y = ((y + 1) * env->scale) + (env->origin.y) - env->scale;
-	// new_y -= (env->data.row / 2) * env->scale;
-	return (new_y);
+void	draw_line(t_env *env, t_fpoint point0, t_fpoint point1)
+{
+	float	step;
+	float	x;
+	float	y;
+	int		i;
+	t_delta	delta;
+
+	i = 0;
+	delta.dx = point1.x - point0.x;
+	delta.dy = point1.y - point0.y;
+	if (fabsf(delta.dx) >= fabsf(delta.dy))
+		step = fabsf(delta.dx);
+	else
+		step = fabsf(delta.dy);
+	delta.dx = delta.dx / step;
+	delta.dy = delta.dy / step;
+	x = point0.x;
+	y = point0.y;
+	while (i < step)
+	{
+		put_pixel(env, -x + WINDOW_WIDTH / 2 + env->translation, \
+		-y + WINDOW_HEIGHT / 2 + env->translation, RED);
+		x = x + delta.dx;
+		y = y + delta.dy;
+		i++;
+	}
 }
 
-static int	ft_get_new_z(t_env *env, int i, int j)
-{
-	int	new_z;
-	int	x;
-	int	y;
-	int	z;
+*/
 
-	(void)x;
-	(void)y;
-	(void)z;
-	x = env->data.matrix[i][j].x;
-	y = env->data.matrix[i][j].y;
-	z = env->data.matrix[i][j].z;
-	new_z = ((z + 1) * env->scale) + (env->origin.z) - env->scale;
-	// new_z -= (env->data.row / 2) * env->scale;
-	return (new_z);
+static void	ft_draw_all_lines(t_env *env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < env->data.row)
+	{
+		j = 0;
+		while (j < env->data.col)
+		{
+			if (j + 1 < env->data.col && i < env->data.row)
+				ft_draw_line(env, env->data.matrix[i][j], env->data.matrix[i][j + 1]);
+			if (i + 1 < env->data.row && j < env->data.col)
+				ft_draw_line(env, env->data.matrix[i][j], env->data.matrix[i + 1][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
+static void	ft_print_matrix(t_env *env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < env->data.row)
+	{
+		j = 0;
+		while (j < env->data.col)
+		{
+			ft_printf("[x: %d, y: %d]", env->data.matrix[i][j].x, env->data.matrix[i][j].y);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
 }
 
 int	ft_draw(t_env *env)
@@ -119,28 +146,33 @@ int	ft_draw(t_env *env)
 	int	j;
 	int x;
 	int y;
-	int z;
 
+	ft_transformation_points(env);
+	ft_print_matrix(env);	
 	i = 0;
-	ft_prep_img(env);
 	while (i < env->data.row)
 	{
 		j = 0;
 		while (j < env->data.col)
 		{
-			x = ft_get_new_x(env, i, j);
-			y = ft_get_new_y(env, i, j);
-			z = ft_get_new_z(env, i, j);
-			x = (x * cos(env->angle)) + (y * cos(env->angle + 2)) + (z * cos(env->angle - 2));
-			y = (x * sin(env->angle)) + (y * sin(env->angle + 2)) + (z * sin(env->angle - 2));
+			x = env->data.matrix[i][j].x;
+			y = env->data.matrix[i][j].y;
 			if (x >= 0 && x <= env->width && y >=0 && y <= env->height)
-				my_pixel_put(&env->img, x, y, 0xFFFFFF);
+				my_pixel_put(&env->img, x, y, 0xFF0000);
 			j++;
 		}
 		i++;
 	}
 	// ft_draw_rectangle(env, env->origin.x, env->origin.y, 8, 0xFF0000);
 	my_pixel_put(&env->img, env->origin.x, env->origin.y, 0xFF0000);
+	
+	// ft_draw_line(env, env->data.matrix[0][0], env->data.matrix[0][1]);
+	// ft_draw_line(env, env->data.matrix[0][0], env->data.matrix[1][0]);
+
+	// ft_draw_line(env, env->data.matrix[1][0], env->data.matrix[2][0]);
+	
+	// ft_draw_all_lines(env);
+	// mlx_clear_window(env->mlx_ptr, env->win_ptr);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.img_ptr, 0, 0);
 	return (0);
 }

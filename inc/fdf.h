@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 15:37:06 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 11:35:09 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,9 @@ void		ft_trigger_hooks(t_env *env);
 t_parsing	ft_start_parsing(char *filename);
 
 int			ft_draw(t_env *env);
+
+void		ft_transformation_points(t_env *env);
+
+void		ft_prep_img(t_env *env);
 
 #endif
