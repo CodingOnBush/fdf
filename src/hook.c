@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 20:39:27 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 22:08:30 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,30 @@ static int	ft_escape_hook(int keycode, t_env *env)
 static int ft_key_hook(int keycode, t_env *env)
 {
 	(void)env;
-	ft_printf("keycode: %d\n", keycode);
+	(void)keycode;
+	// ft_printf("keycode: %d\n", keycode);
 	return (0);
 }
 
 static int ft_mouse_hook(int button, int x, int y, t_env *env)
 {
-	ft_printf("button: %d\n", button);
+	// ft_printf("button: %d\n", button);
 	(void)x;
 	(void)y;
-	if (button == 4)
-	{
-		env->space += 0.5;
-		ft_draw(env);
-	}
-	else if (button == 5)
-	{
-		env->space -= 0.5;
-		ft_draw(env);
-	}
+	(void)env;
+	(void)button;
+	// if (button == 4)
+	// {
+	// 	// env->space += 0.5;
+	// 	// env->altitude += 0.2;
+	// 	ft_draw(env);
+	// }
+	// else if (button == 5)
+	// {
+	// 	// env->space -= 0.5;
+	// 	// env->altitude -= 0.2;
+	// 	ft_draw(env);
+	// }
 	return (0);
 }
 

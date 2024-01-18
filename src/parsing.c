@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 20:38:33 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 21:55:12 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,7 +330,7 @@ t_parsing	ft_start_parsing(char *filename)
 		line = ft_gnl(fd);
 		if (!line)
 			break ;
-		ft_printf("%s", line);
+		// ft_printf("%s", line);
 		ft_parse_line(&data, line);
 		free(line);
 	}
