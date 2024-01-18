@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 09:57:03 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 18:03:54 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ t_env	ft_init_env(t_parsing data)
 	env.z_offset = 0;
 	env.angle = 0.45;
 	env.zoom = 20;
+	env.scale = 5;
+	env.space = 10;
 	env.origin.x = width / 2;
 	env.origin.y = height / 2;
-	env.scale = 30;
 	env.mlx_ptr = mlx_init();
 	if (!(env.mlx_ptr))
 		ft_exit_error("mlx_init failed");

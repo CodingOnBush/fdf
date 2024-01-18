@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 11:57:13 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 17:57:59 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	my_pixel_put(t_img *img, int x, int y, int color)
 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
 	px = (unsigned int *)(img->img_pixels_ptr + offset);
 	*px = color;
+	// ft_printf("pixel put\n");
 }
 
 // static void ft_draw_rectangle(t_env *env, int x, int y, int size, int color)
@@ -140,39 +141,32 @@ static void	ft_print_matrix(t_env *env)
 	}
 }
 
-int	ft_draw(t_env *env)
+void	ft_draw(t_env *env)
 {
 	int	i;
 	int	j;
 	int x;
 	int y;
+	int z;
 
-	ft_transformation_points(env);
-	ft_print_matrix(env);	
 	i = 0;
+	ft_bzero(env->img.img_pixels_ptr, env->img.line_len * env->height);
 	while (i < env->data.row)
 	{
 		j = 0;
 		while (j < env->data.col)
 		{
-			x = env->data.matrix[i][j].x;
-			y = env->data.matrix[i][j].y;
+			x = ft_get_new_x(env, i, j);
+			y = ft_get_new_y(env, i, j);
+			z = ft_get_new_z(env, i, j);
+			x = (x * cos(env->angle)) + (y * cos(env->angle + 2)) + (z * cos(env->angle - 2));
+			y = (x * sin(env->angle)) + (y * sin(env->angle + 2)) + (z * sin(env->angle - 2));
 			if (x >= 0 && x <= env->width && y >=0 && y <= env->height)
-				my_pixel_put(&env->img, x, y, 0xFF0000);
+				my_pixel_put(&env->img, x, y, 0xFFFFFF);
 			j++;
 		}
 		i++;
 	}
-	// ft_draw_rectangle(env, env->origin.x, env->origin.y, 8, 0xFF0000);
 	my_pixel_put(&env->img, env->origin.x, env->origin.y, 0xFF0000);
-	
-	// ft_draw_line(env, env->data.matrix[0][0], env->data.matrix[0][1]);
-	// ft_draw_line(env, env->data.matrix[0][0], env->data.matrix[1][0]);
-
-	// ft_draw_line(env, env->data.matrix[1][0], env->data.matrix[2][0]);
-	
-	// ft_draw_all_lines(env);
-	// mlx_clear_window(env->mlx_ptr, env->win_ptr);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.img_ptr, 0, 0);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 11:52:59 by momrane           #+#    #+#             */
-/*   Updated: 2023/11/15 12:16:00 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 17:46:13 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 # include <limits.h>
 # include <stdint.h>
 # include <unistd.h>
+// # include "get_next_line.h"
+
+char	*ft_strsub(char const *s, unsigned int start, size_t len);
+int	ft_strcmp(const char *s1, const char *s2);
+char	*ft_strnew(size_t size);
+int		ft_strchrpos(const char *s, int c);
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);

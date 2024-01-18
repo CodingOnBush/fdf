@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 11:29:41 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 18:04:35 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ static int ft_key_hook(int keycode, t_env *env)
 {
 	ft_printf("keycode: %d\n", keycode);
 	if (keycode == 65293)
-	{
 		env->scale += 1;
-		mlx_clear_window(env->mlx_ptr, env->win_ptr);
-	}
 	return (0);
 }
 
@@ -45,12 +42,14 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 	ft_printf("button: %d\n", button);
 	(void)x;
 	(void)y;
-	if (button == 4 || button == 5)
+	if (button == 4)
 	{
-		if (button == 4)
-			env->scale += 0.1;
-		else
-			env->scale -= 0.1;
+		env->scale += 0.1;
+		ft_draw(env);
+	}
+	else if (button == 5)
+	{
+		env->scale -= 0.1;
 		ft_draw(env);
 	}
 	return (0);
@@ -58,8 +57,8 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 
 void	ft_trigger_hooks(t_env *env)
 {
-	mlx_key_hook(env->win_ptr, ft_key_hook, env);//				keyboard
-	mlx_mouse_hook(env->win_ptr, ft_mouse_hook, env);//			mouse
-	mlx_hook(env->win_ptr, 2, 1L << 0, ft_escape_hook, env);//	XK_Escape
-	mlx_hook(env->win_ptr, 17, 1L << 2, ft_cross_hook, env);//	window cross
+	mlx_key_hook(env->win_ptr, ft_key_hook, env);
+	mlx_mouse_hook(env->win_ptr, ft_mouse_hook, env);
+	mlx_hook(env->win_ptr, 2, 1L << 0, ft_escape_hook, env);
+	mlx_hook(env->win_ptr, 17, 1L << 2, ft_cross_hook, env);
 }

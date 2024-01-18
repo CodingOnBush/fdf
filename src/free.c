@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:42:49 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 10:48:45 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 17:22:41 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_free_everything(t_env *env)
 		{
 			if (env->win_ptr)
 			{
-				if (env->img.img_ptr)
+				if (env->img.img_ptr != NULL)
 					mlx_destroy_image(env->mlx_ptr, env->img.img_ptr);
 				mlx_clear_window(env->mlx_ptr, env->win_ptr);
 				mlx_destroy_window(env->mlx_ptr, env->win_ptr);

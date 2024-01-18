@@ -6,13 +6,13 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/17 15:35:38 by momrane           #+#    #+#              #
-#    Updated: 2024/01/07 17:56:06 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/18 17:46:26 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 AR =	ar rcs
 CC = 	cc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -fPIE
 BIN =	./bin
 NAME =	libft.a
 SRCS =	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
@@ -26,7 +26,8 @@ SRCS =	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
 		ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
 		ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 		ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-		ft_lstclear.c ft_lstiter.c ft_lstmap.c
+		ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_strsub.c \
+		ft_strcmp.c ft_strnew.c ft_strchrpos.c #get_next_line.c
 OBJS =	$(SRCS:%.c=$(BIN)/%.o)
 
 all: $(NAME)

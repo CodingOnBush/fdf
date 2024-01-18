@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   ft_strchrpos.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 11:24:03 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 17:54:17 by momrane          ###   ########.fr       */
+/*   Created: 2016/01/13 11:36:54 by adespond          #+#    #+#             */
+/*   Updated: 2024/01/18 17:40:10 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/fdf.h"
+#include "libft.h"
 
-void	ft_prep_img(t_env *env)
+int		ft_strchrpos(const char *s, int c)
 {
-	env->img.bits_per_pixel = 32;
-	env->img.endian = 0;
-	env->img.line_len = env->width * 4;
-	if (!(env->img.img_ptr))
-		env->img.img_ptr = mlx_new_image(env->mlx_ptr, env->width, env->height);
-	if (!(env->img.img_pixels_ptr))
-		env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr,
-				&env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
+	int		i;
+	char	c2;
+
+	i = 0;
+	c2 = (char)c;
+	while (s[i] != '\0' && c2 != s[i])
+		i++;
+	if (s[i] != c2)
+		return (-1);
+	else
+		return (i);
 }

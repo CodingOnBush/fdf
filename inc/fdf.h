@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 11:35:09 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 18:02:09 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,19 @@ void		ft_trigger_hooks(t_env *env);
 
 t_parsing	ft_start_parsing(char *filename);
 
-int			ft_draw(t_env *env);
+void	ft_draw(t_env *env);
 
 void		ft_transformation_points(t_env *env);
 
 void		ft_prep_img(t_env *env);
+
+void		ft_move_points(t_env *env);
+
+int	ft_get_new_x(t_env *env, int i, int j);
+int	ft_get_new_y(t_env *env, int i, int j);
+int	ft_get_new_z(t_env *env, int i, int j);
+
+void	ft_print_point(t_env *env, int i, int j);
+void	ft_parse_matrix(t_env *env, void (*f)(t_env *env, int i, int j));
 
 #endif
