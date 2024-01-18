@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:47 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 22:05:39 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 23:06:49 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int	ft_get_new_z(t_env *env, int r, int c)
 	int	z;
 
 	z = env->data.matrix[r][c].z;
-	new_z = z;// + env->altitude;
+	new_z = (z * env->space / 10) * env->altitude;
 	return (new_z);
 }

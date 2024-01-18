@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 22:12:00 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 23:05:25 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,73 @@ t_pt	**ft_new_matrix(int r, int c)
 	return (new);
 }
 
+int	compare(int a, int b)
+{
+	int	ret;
+
+	if (a < b)
+		ret = 1;
+	else
+		ret = -1;
+	return (ret);
+}
+
+void	put_pixel(t_env *env, int x, int y, int color)
+{
+	char	*addr;
+
+	if ((x >= 0 && x < env->width) && (y >= 0 && y < env->height))
+	{
+		env->img.img_pixels_ptr = mlx_get_data_addr(env->img.img_ptr, &env->img.bits_per_pixel, &env->img.line_len, &env->img.endian);
+		addr = env->img.img_pixels_ptr + (y * env->img.line_len + x * (env->img.bits_per_pixel / 8));
+		*(unsigned int *)addr = color;
+	}
+}
+
+void	bresnham(t_env *env, t_pt a, t_pt b)
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+
+	dx = abs(b.x - a.x);
+	sx = compare(a.x, b.x);
+	dy = -abs(b.y - a.y);
+	sy = compare(a.y, b.y);
+	err = dx + dy;
+	while (1)
+	{
+		put_pixel(env, a.x, a.y, 0xFFFFFF);
+		if (a.x == b.x && a.y == b.y)
+			break ;
+		e2 = 2 * err;
+		if (e2 >= dy)
+		{
+			err += dy;
+			a.x += sx;
+		}
+		if (e2 <= dx)
+		{
+			err += dx;
+			a.y += sy;
+		}
+	}
+}
+
 void	ft_draw_line(t_env *env, t_pt a, t_pt b)
 {
-	int		x;
-	int		y;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	int		err;
-	int		e2;
-	int		color;
+	int	x;
+	int	y;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+	int	color;
 
 	color = 0xFFFFFF;
 	x = a.x;
@@ -89,7 +145,9 @@ void	ft_draw_lines(t_env *env, t_pt **mat, int row, int col)
 		while (c < col)
 		{
 			if (c < col - 1)
-				ft_draw_line(env, mat[r][c], mat[r][c + 1]);
+				bresnham(env, mat[r][c], mat[r][c + 1]);
+			if (r < row - 1)
+				bresnham(env, mat[r][c], mat[r + 1][c]);
 			// if (r < row - 1)
 			// 	ft_draw_line(env, mat[r][c], mat[r + 1][c]);
 			c++;
@@ -100,12 +158,15 @@ void	ft_draw_lines(t_env *env, t_pt **mat, int row, int col)
 
 void	ft_draw(t_env *env)
 {
-	int	r;
-	int	c;
-	int x;
-	int y;
-	int z;
-	t_pt **new;
+	int		r;
+	int		c;
+	int		x;
+	int		y;
+	int		z;
+	int 	x_2d;
+	int 	y_2d;
+
+	t_pt	**new;
 
 	new = ft_new_matrix(env->data.row, env->data.col);
 	if (!new)
@@ -120,13 +181,29 @@ void	ft_draw(t_env *env)
 			x = ft_get_new_x(env, r, c);
 			y = ft_get_new_y(env, r, c);
 			z = ft_get_new_z(env, r, c);
-			x = (x * cos(env->angle)) + (y * cos(env->angle + 2)) + (z * cos(env->angle - 2));
-			y = (x * sin(env->angle)) + (y * sin(env->angle + 2)) + (z * sin(env->angle - 2));
-			x += env->origin.x;
-			y += env->origin.y;
-			new[r][c].x = x;
-			new[r][c].y = y;
+			/* presque */
+			// x = (x * cos(env->angle)) + (y * cos(env->angle + 2)) + (z
+			// 		* cos(env->angle - 2));
+			// y = (x * sin(env->angle)) + (y * sin(env->angle + 2)) + (z
+			// 		* sin(env->angle - 2));
+			
+			/* bon resultat */
+			// x_2d = x - y;
+    		// y_2d = (x + y) / 2 - z;
+			// x_2d += env->origin.x;
+			// y_2d += env->origin.y;
+
+			/* tentons un autre truc */
+			x = x * cos(env->angle) - y * sin(env->angle);
+			y = x * sin(env->angle) + y * cos(env->angle);
+			x_2d = x - y;
+			y_2d = (x + y) / 2 - z;
+			x_2d += env->origin.x;
+			y_2d += env->origin.y;
+			new[r][c].x = x_2d;
+			new[r][c].y = y_2d;
 			new[r][c].z = z;
+			// ft_printf("x: %d, y: %d, z: %d\n", x_2d, y_2d, z);
 			// if (x >= 0 && x <= env->width && y >=0 && y <= env->height)
 			// 	my_pixel_put(&env->img, x, y, 0xFFFFFF);
 			c++;
