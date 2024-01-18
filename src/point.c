@@ -6,112 +6,51 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:47 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 17:20:09 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 20:50:21 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-int	ft_get_new_x(t_env *env, int i, int j)
+int	ft_get_new_x(t_env *env, int r, int c)
 {
 	int	new_x;
 	int	x;
-	int	y;
-	int	z;
 
-	(void)x;
-	(void)y;
-	(void)z;
 	if (env->data.matrix == NULL)
 		return (0);
-	x = env->data.matrix[i][j].x;
-	y = env->data.matrix[i][j].y;
-	z = env->data.matrix[i][j].z;
-	// new_x = x - env->data.col / 2;
-	// new_x *= env->scale;
+	x = env->data.matrix[r][c].x;
 	new_x = x + 1;
-	new_x *= env->scale;
-	new_x += env->origin.x;
-	// new_x = ((x + 1) * env->scale);// + (env->origin.x);
-	// new_x -= (env->data.col / 2) * env->scale;
+	if (c < env->data.c)
+		new_x -= env->space * (env->data.c - c);
+	else if (c > env->data.c)
+		new_x += (env->space) * (env->data.col - c);
+	// ft_printf("new_x = %d\n", new_x);
 	return (new_x);
 }
 
-int	ft_get_new_y(t_env *env, int i, int j)
+int	ft_get_new_y(t_env *env, int r, int c)
 {
 	int	new_y;
-	int	x;
 	int	y;
-	int	z;
 
-	(void)x;
-	(void)y;
-	(void)z;
-	x = env->data.matrix[i][j].x;
-	y = env->data.matrix[i][j].y;
-	z = env->data.matrix[i][j].z;
-	// new_y = y - env->data.row / 2;
+	y = env->data.matrix[r][c].y;
+
 	new_y = y + 1;
-	new_y *= env->scale;
-	new_y += env->origin.y;
-	// new_y = ((y + 1) * env->scale);// + (env->origin.y);
-	// new_y -= (env->data.col / 2) * env->scale;
-	// new_y = ((y + 1) * env->scale) + env->origin.y;
+	if (r < env->data.r)
+		new_y -= env->space * (env->data.r - r);
+	else if (r > env->data.r)
+		new_y += (env->space) * (env->data.row - r);
+	// ft_printf("new_y = %d\n", new_y);
 	return (new_y);
 }
 
-int	ft_get_new_z(t_env *env, int i, int j)
+int	ft_get_new_z(t_env *env, int r, int c)
 {
 	int	new_z;
-	int	x;
-	int	y;
 	int	z;
 
-	(void)x;
-	(void)y;
-	(void)z;
-	x = env->data.matrix[i][j].x;
-	y = env->data.matrix[i][j].y;
-	z = env->data.matrix[i][j].z;
-	// new_z = z + 1;
-	// new_z = ((z + 1) * env->scale);// + (env->origin.z);
-	// new_z = (z * env->scale) + (env->origin.z / 2);
-	// new_z -= (env->data.row / 2) * env->scale;
-	// new_z = (z + 1) * env->scale;
-	new_z = z * env->scale;
+	z = env->data.matrix[r][c].z;
+	new_z = z * env->space / 2;
 	return (new_z);
-}
-
-void	ft_transformation_points(t_env *env)
-{
-	int	i;
-	int	j;
-	int x;
-	int y;
-	int z;
-
-	i = 0;
-	while (i < env->data.row)
-	{
-		j = 0;
-		while (j < env->data.col)
-		{
-			x = ft_get_new_x(env, i, j);
-			y = ft_get_new_y(env, i, j);
-			z = ft_get_new_z(env, i, j);
-			x = (x * cos(env->angle)) + (y * cos(env->angle + 2)) + (z * cos(env->angle - 2));
-			y = (x * sin(env->angle)) + (y * sin(env->angle + 2)) + (z * sin(env->angle - 2));
-			env->data.matrix[i][j].x = x;
-			env->data.matrix[i][j].y = y;
-			env->data.matrix[i][j].z = z;
-			j++;
-		}
-		i++;
-	}
-}
-
-void	ft_center_points(t_env *env, int i, int j)
-{
-	env->data.matrix[i][j].x += env->origin.x - env->data.col * env->space;
-	env->data.matrix[i][j].y += env->origin.y - env->data.row * env->space;
 }

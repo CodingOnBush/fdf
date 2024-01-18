@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 07:52:08 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/14 13:31:11 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 20:35:59 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,24 +120,3 @@ char	*ft_gnl(int fd)
 	ft_update_lst(&lst);
 	return (line);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	char	*line;
-// 	int		fd;
-
-// 	line = NULL;
-// 	fd = open("file", O_RDONLY);
-// 	while ((line = get_next_line(fd)))
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	free(line);
-// 	close(fd);
-// 	return (0);
-// 	// gcc -Wall -Werror -Wextra *.c -g3 -D BUFFER_SIZE=5
-// 	// valgrind -s --track-origins=yes --leak-check=full ./a.out
-// }

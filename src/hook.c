@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 18:04:35 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 20:39:27 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ static int	ft_escape_hook(int keycode, t_env *env)
 
 static int ft_key_hook(int keycode, t_env *env)
 {
+	(void)env;
 	ft_printf("keycode: %d\n", keycode);
-	if (keycode == 65293)
-		env->scale += 1;
 	return (0);
 }
 
@@ -44,12 +43,12 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 	(void)y;
 	if (button == 4)
 	{
-		env->scale += 0.1;
+		env->space += 0.5;
 		ft_draw(env);
 	}
 	else if (button == 5)
 	{
-		env->scale -= 0.1;
+		env->space -= 0.5;
 		ft_draw(env);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/16 14:54:47 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/18 20:38:33 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,26 +304,6 @@ static void	ft_malloc_matrix(t_parsing *data)
 	}
 }
 
-static void	ft_print_matrix(t_parsing *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < data->row)
-	{
-		j = 0;
-		while (j < data->col)
-		{
-			ft_printf("[x:%d y:%d z:%d]", data->matrix[i][j].x, data->matrix[i][j].y, data->matrix[i][j].z);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-}
-
 static void	ft_init_parsing(t_parsing *data, char *filename)
 {
 	data->matrix = NULL;
@@ -355,5 +335,7 @@ t_parsing	ft_start_parsing(char *filename)
 		free(line);
 	}
 	close(fd);
+	data.r = data.row / 2;
+	data.c = data.col / 2;
 	return (data);
 }
