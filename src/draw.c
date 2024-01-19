@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 04:52:15 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 05:31:43 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,50 +124,14 @@ void	ft_draw(t_env *env)
 		c = 0;
 		while (c < env->data.col)
 		{
-			x = env->data.matrix[r][c].x;
-			y = env->data.matrix[r][c].y;
-			
-			// if (c < env->data.c)
-			// 	x -= env->space * (env->data.c - c);
-			// else if (c > env->data.c)
-			// 	x += env->space * (env->data.col - c);
-			
-			// if (r < env->data.r)
-			// 	y -= env->space * (env->data.r - r);
-			// else if (r > env->data.r)
-			// 	y += env->space * (env->data.row - r);
-			
-			x *= env->space;
-			y *= env->space;
-
-			// new_x = x - y;
-			// new_y = (x + y) / 2 - env->data.matrix[r][c].z * env->altitude;
-
-			new_x = x * cos(env->angle) - y * sin(env->angle);
-			new_y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - env->data.matrix[r][c].z * env->altitude;
-			
-			new_x += env->origin.x;
-			new_y += env->origin.y;
-
-			
-			new[r][c].x = new_x;
-			new[r][c].y = new_y;
+			x = env->data.matrix[r][c].x * env->space;
+			y = env->data.matrix[r][c].y * env->space;
+			// new_x = x * cos(env->angle) - y * sin(env->angle);
+			// new_y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - env->data.matrix[r][c].z * env->altitude;
+			new[r][c].x = x + env->origin.x - env->data.col;
+			new[r][c].y = y + env->origin.y - env->data.row;
 			new[r][c].z = env->data.matrix[r][c].z;
 			new[r][c].color = env->data.matrix[r][c].color + new[r][c].z * 100;
-			// if (new_x >= 0 && new_x <= env->width && new_y >=0
-				// && new_y <= env->height)
-			// {
-			// 	if (ft_get_new_z(env, r, c) * env->altitude > 0)
-			// 	{
-			// 		my_pixel_put(env, new_x, new_y, 0xFF0000);
-			// 		ft_printf("X");
-			// 	}
-			// 	else
-			// 	{
-			// 		my_pixel_put(env, new_x, new_y, 0x00FF00);
-			// 		ft_printf("O");
-			// 	}
-			// }
 			c++;
 		}
 		r++;
