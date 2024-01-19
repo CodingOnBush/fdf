@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 23:05:17 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 04:24:53 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,20 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 	ft_printf("button: %d\n", button);
 	(void)x;
 	(void)y;
-	(void)env;
-	(void)button;
 	if (button == 4)
 	{
 		// env->space += 0.5;
 		// env->angle += 0.1;
-		env->altitude += 0.2;
+		ft_printf("altitude: %f\n", env->altitude);
+		env->altitude += 0.8;
+		ft_printf("new altitude: %f\n", env->altitude);
 		ft_draw(env);
 	}
 	else if (button == 5)
 	{
 		// env->space -= 0.5;
 		// env->angle -= 0.1;
-		env->altitude -= 0.2;
+		env->altitude -= 0.8;
 		ft_draw(env);
 	}
 	return (0);

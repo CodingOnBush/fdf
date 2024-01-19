@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 23:04:45 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 01:39:53 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_env	ft_init_env(t_parsing data)
 	int		width;
 	int		height;
 
-	width = 1000;
-	height = 1000;
+	width = 1200;
+	height = 800;
 	env.data = data;
 	env.width = width;
 	env.height = height;
@@ -30,7 +30,7 @@ t_env	ft_init_env(t_parsing data)
 	env.zoom = 20;
 	env.altitude = 20;
 	env.scale = 5;
-	env.space = 40;//width / data.col / 1.5;
+	env.space = 20;//width / data.col / 1.5;
 	env.origin.x = width / 2;
 	env.origin.y = height / 2;
 	env.mlx_ptr = mlx_init();

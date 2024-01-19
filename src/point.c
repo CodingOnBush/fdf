@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:47 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 23:06:49 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 03:15:03 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	ft_get_new_x(t_env *env, int r, int c)
 	if (env->data.matrix == NULL)
 		return (0);
 	x = env->data.matrix[r][c].x;
-	new_x = x;
+	new_x = x + env->origin.x;
 	if (c < env->data.c)
 		new_x -= env->space * (env->data.c - c);
 	else if (c > env->data.c)
-		new_x += (env->space) * (env->data.col - c);
+		new_x += env->space * (env->data.col - c);
 	return (new_x);
 }
 
@@ -35,11 +35,11 @@ int	ft_get_new_y(t_env *env, int r, int c)
 
 	y = env->data.matrix[r][c].y;
 
-	new_y = y;
+	new_y = y + env->origin.y;
 	if (r < env->data.r)
 		new_y -= env->space * (env->data.r - r);
 	else if (r > env->data.r)
-		new_y += (env->space) * (env->data.row - r);
+		new_y += env->space * (env->data.row - r);
 	return (new_y);
 }
 
@@ -49,6 +49,6 @@ int	ft_get_new_z(t_env *env, int r, int c)
 	int	z;
 
 	z = env->data.matrix[r][c].z;
-	new_z = (z * env->space / 10) * env->altitude;
+	new_z = z * env->altitude;
 	return (new_z);
 }
