@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 05:31:43 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:06:15 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,10 @@ void	ft_draw(t_env *env)
 		{
 			x = env->data.matrix[r][c].x * env->space;
 			y = env->data.matrix[r][c].y * env->space;
-			// new_x = x * cos(env->angle) - y * sin(env->angle);
-			// new_y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - env->data.matrix[r][c].z * env->altitude;
-			new[r][c].x = x + env->origin.x - env->data.col;
-			new[r][c].y = y + env->origin.y - env->data.row;
+			new_x = x * cos(env->angle) - y * sin(env->angle);
+			new_y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - env->data.matrix[r][c].z * env->altitude;
+			new[r][c].x = new_x + env->origin.x - env->data.col;
+			new[r][c].y = new_y + env->origin.y - env->data.row;
 			new[r][c].z = env->data.matrix[r][c].z;
 			new[r][c].color = env->data.matrix[r][c].color + new[r][c].z * 100;
 			c++;
