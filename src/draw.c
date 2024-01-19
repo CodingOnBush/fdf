@@ -6,11 +6,27 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 04:23:16 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 04:31:26 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
+
+int lerp_color(int color1, int color2, float factor) {
+    int r1 = (color1 >> 16) & 0xFF;
+    int g1 = (color1 >> 8) & 0xFF;
+    int b1 = color1 & 0xFF;
+
+    int r2 = (color2 >> 16) & 0xFF;
+    int g2 = (color2 >> 8) & 0xFF;
+    int b2 = color2 & 0xFF;
+
+    int r = (int)(r1 + factor * (r2 - r1));
+    int g = (int)(g1 + factor * (g2 - g1));
+    int b = (int)(b1 + factor * (b2 - b1));
+
+    return (r << 16) | (g << 8) | b;
+}
 
 static void	my_pixel_put(t_env *env, int x, int y, int color)
 {
@@ -47,6 +63,8 @@ void	draw_line_dda(t_env *env, t_pt pt1, t_pt pt2)
 	float	x = pt1.x, y;
 	float	dx = pt2.x - pt1.x, dy;
 	int		i;
+	float factor;
+	int	color;
 
 	float xIncrement, yIncrement;
 	x = pt1.x, y = pt1.y;
@@ -57,8 +75,10 @@ void	draw_line_dda(t_env *env, t_pt pt1, t_pt pt2)
 	i = 0;
 	while (i <= steps)
 	{
+		factor = i / (float)steps;
+        color = lerp_color(pt1.color, pt2.color, factor);
 		if (x >= 0 && x < env->width && y >= 0 && y < env->height)
-			my_pixel_put(env, (int)x, (int)y, 0xFFFFFF);
+			my_pixel_put(env, (int)x, (int)y, color);
 		x += xIncrement;
 		y += yIncrement;
 		i++;
@@ -116,7 +136,8 @@ void	ft_draw(t_env *env)
 			new_y += env->origin.y;
 			new[r][c].x = new_x;
 			new[r][c].y = new_y;
-			new[r][c].z = env->data.matrix[r][c].z;	
+			new[r][c].z = env->data.matrix[r][c].z;
+			new[r][c].color = env->data.matrix[r][c].color + new[r][c].z * 100;
 			// if (new_x >= 0 && new_x <= env->width && new_y >=0
 				// && new_y <= env->height)
 			// {
