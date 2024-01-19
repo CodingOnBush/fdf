@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/18 18:02:09 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:25:13 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-void		ft_free_everything(t_env *env);
+t_pt	**ft_new_matrix(int r, int c);
 
+void		ft_free_everything(t_env *env);
 t_env		ft_init_env(t_parsing data);
 void		ft_exit_error(char *str);
 

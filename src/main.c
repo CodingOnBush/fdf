@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:43 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 04:35:35 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:25:48 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		ft_exit_error("Usage: ./fdf <filename>");
 	data = ft_start_parsing(av[1]);
-	ft_printf("Rows: %d\nCols: %d\n", data.row, data.col);
 	env = ft_init_env(data);
+	env.mat = ft_new_matrix(env.data.row, env.data.col);
+	if (!env.mat)
+		ft_exit_error("malloc failed");
 	ft_trigger_hooks(&env);
 	ft_prep_img(&env);
 	ft_draw(&env);

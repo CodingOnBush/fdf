@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 01:47:02 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 15:37:34 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	ft_point_detected(t_parsing *data, char *line)
 			i++;
 	}
 	else
-		data->matrix[data->r][data->c].color = 65280;
+		data->matrix[data->r][data->c].color = 0xFFFFFF;
 	data->c++;
 	return (i);
 }
@@ -182,7 +182,6 @@ t_parsing	ft_start_parsing(char *filename)
 		line = ft_gnl(fd);
 		if (!line)
 			break ;
-		// ft_printf("%s", line);
 		ft_parse_line(&data, line);
 		free(line);
 	}

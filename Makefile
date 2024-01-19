@@ -6,7 +6,7 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/18 18:02:01 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/19 15:39:39 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,12 @@ GREEN 			= \033[0;92m
 CYAN 			= \033[0;96m
 
 #Sources
-SRC_FILES 		=	errors free ft_gnl gnl_utils main parsing \
-					point hook draw environment image matrix
-SRC 			= 	$(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
-OBJ				= 	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
+# SRC_FILES 		=	errors free ft_gnl gnl_utils main parsing \
+# 					point hook draw environment image matrix
+# SRC 			= 	$(addprefix $(SRC_DIR)/, $(addsuffix .c, $(SRC_FILES)))
+SRC				=	$(wildcard $(SRC_DIR)/*.c)
+# OBJ				= 	$(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(SRC_FILES)))
+OBJ				=	$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 #Rules
 all: $(NAME)
