@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 04:31:26 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/19 04:52:15 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void	my_pixel_put(t_env *env, int x, int y, int color)
 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
 	// offset = (img->size_line * y) + (x * (img->bpp / 8));
 	// *((unsigned int *)(offset + img->img_data)) = color;
-	if (x > env->width - 1 || y > env->height - 1 || x < 0 || y < 0)
-		return ;
 	dst = env->img.img_data + (y * env->img.size_line + x * (env->img.bpp / 8));
 	*(unsigned int *)dst = color;
 }
@@ -126,14 +124,32 @@ void	ft_draw(t_env *env)
 		c = 0;
 		while (c < env->data.col)
 		{
-			x = env->data.matrix[r][c].x + 1;
-			y = env->data.matrix[r][c].y + 1;
-			x *= 10;
-			y *= 10;
-			new_x = x - y;
-			new_y = (x + y) / 2 - env->data.matrix[r][c].z * env->altitude;
+			x = env->data.matrix[r][c].x;
+			y = env->data.matrix[r][c].y;
+			
+			// if (c < env->data.c)
+			// 	x -= env->space * (env->data.c - c);
+			// else if (c > env->data.c)
+			// 	x += env->space * (env->data.col - c);
+			
+			// if (r < env->data.r)
+			// 	y -= env->space * (env->data.r - r);
+			// else if (r > env->data.r)
+			// 	y += env->space * (env->data.row - r);
+			
+			x *= env->space;
+			y *= env->space;
+
+			// new_x = x - y;
+			// new_y = (x + y) / 2 - env->data.matrix[r][c].z * env->altitude;
+
+			new_x = x * cos(env->angle) - y * sin(env->angle);
+			new_y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - env->data.matrix[r][c].z * env->altitude;
+			
 			new_x += env->origin.x;
 			new_y += env->origin.y;
+
+			
 			new[r][c].x = new_x;
 			new[r][c].y = new_y;
 			new[r][c].z = env->data.matrix[r][c].z;
