@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 16:22:06 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 10:09:09 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-static int	ft_cross_hook(t_env *env)
+static int	ft_win_cross(t_env *env)
 {
 	ft_free_everything(env);
 	exit(0);
@@ -84,5 +84,5 @@ void	ft_trigger_hooks(t_env *env)
 {
 	mlx_key_hook(env->win_ptr, ft_key_hook, env);
 	mlx_mouse_hook(env->win_ptr, ft_mouse_hook, env);
-	mlx_hook(env->win_ptr, 17, 1L << 2, ft_cross_hook, env);
+	mlx_hook(env->win_ptr, 17, 1L << 2, ft_win_cross, env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 16:25:13 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 10:35:51 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 
 t_pt	**ft_new_matrix(int r, int c);
 
-void		ft_free_everything(t_env *env);
-t_env		ft_init_env(t_parsing data);
+void	ft_free_env(t_env *env);
+int	ft_free_everything(t_env *env, int return_value);
+int			ft_init_env(t_env *env, t_parsing data);
+int			ft_free_mlx_ptr(t_env *env, int return_value);
 void		ft_exit_error(char *str);
 
 void		ft_trigger_hooks(t_env *env);
