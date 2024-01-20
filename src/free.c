@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:42:49 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 12:01:27 by allblue          ###   ########.fr       */
+/*   Updated: 2024/01/20 13:35:24 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*ft_free_matrix(t_pt **matrix, int rows)
 	int	i;
 
 	i = 0;
+	if (!matrix)
+		return (NULL);
 	while (i < rows)
 	{
 		if (matrix[i])
@@ -29,11 +31,9 @@ void	*ft_free_matrix(t_pt **matrix, int rows)
 
 void	ft_free_env(t_env *env)
 {
-	if (!env)
-		return ;
-	if (env->map)
+	if (env->map != NULL)
 		ft_free_matrix(env->map, env->rows);
-	if (env->mat)
+	if (env->mat != NULL)
 		ft_free_matrix(env->mat, env->rows);
 	if (env->mlx_ptr)
 	{
@@ -47,6 +47,7 @@ void	ft_free_env(t_env *env)
 		mlx_destroy_display(env->mlx_ptr);
 		free(env->mlx_ptr);
 	}
+	ft_init_env_values(env, NULL);
 }
 
 int	ft_free_env_err(t_env *env, char *msg)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 12:05:45 by allblue          ###   ########.fr       */
+/*   Updated: 2024/01/20 17:32:39 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	draw_line_dda(t_env *env, t_pt pt1, t_pt pt2)
 	x = pt1.x, y = pt1.y;
 	dx = pt2.x - pt1.x;
 	dy = pt2.y - pt1.y;
-	steps = (abs(dx) > abs(dy)) ? abs(dx) : abs(dy);
+	steps = (abs((int)dx) > abs((int)dy)) ? abs((int)dx) : abs((int)dy);
 	xIncrement = dx / (float)steps;
 	yIncrement = dy / (float)steps;
 	i = 0;
@@ -86,53 +86,18 @@ static void	ft_draw_dda(t_env *env, int r, int c)
 		draw_line_dda(env, env->mat[r][c], env->mat[r + 1][c]);
 }
 
-
-static void	ft_apply_transformation(t_env *env, int r, int c)
+static void	ft_convert_points(t_env *env, int r, int c)
 {
-	int x;
-	int y;
-	int z;
+	t_pt converted_point;
 
-	x = env->map[r][c].x * env->space;
-	y = env->map[r][c].y * env->space;
-	z = env->map[r][c].z * env->space;
-	env->mat[r][c].x = x * cos(env->angle) - y * sin(env->angle);
-	env->mat[r][c].y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - z * env->altitude;
-	env->mat[r][c].x += env->origin.x - env->cols;
-	env->mat[r][c].y += env->origin.y - env->rows;
-	env->mat[r][c].z = env->map[r][c].z;
-	env->mat[r][c].color = env->map[r][c].color + env->mat[r][c].z * 100;
+	converted_point = ft_get_converted_point(env, r, c);
+	env->mat[r][c] = converted_point;
 }
-
-// static void	ft_fill_new_matrix(t_env *env, t_pt **new)
-// {
-// 	int	r;
-// 	int	c;
-
-// 	if (!new)
-// 		ft_exit_error("malloc failed");
-// 	r = 0;
-// 	while (r < env->data.row)
-// 	{
-// 		c = 0;
-// 		while (c < env->data.col)
-// 		{
-// 			new[r][c].x = env->data.matrix[r][c].x * env->space;
-// 			new[r][c].y = env->data.matrix[r][c].y * env->space;
-// 			new[r][c].z = env->data.matrix[r][c].z;
-// 			ft_make_transformation(env, &new[r][c].x, &new[r][c].y,
-// 				&new[r][c].z);
-// 			new[r][c].color = env->data.matrix[r][c].color + new[r][c].z * 100;
-// 			c++;
-// 		}
-// 		r++;
-// 	}
-// }
 
 void	ft_draw(t_env *env)
 {
-	ft_parse_matrix(env, ft_apply_transformation);
-	ft_bzero(env->img.img_data, env->img.size_line * env->height);
+	ft_parse_matrix(env, ft_convert_points);
+	ft_clear_img(env);
 	ft_parse_matrix(env, ft_draw_dda);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.img_ptr, 0, 0);
 }

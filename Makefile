@@ -6,7 +6,7 @@
 #    By: momrane <momrane@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/12 09:27:46 by momrane           #+#    #+#              #
-#    Updated: 2024/01/19 15:39:39 by momrane          ###   ########.fr        #
+#    Updated: 2024/01/20 17:07:23 by momrane          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJ_DIR 		:= ./obj
 INC_DIR 		:= ./inc
 LIB_DIR 		:= ./lib
 CC				:= gcc
-CFLAGS			:= -g -O3 -Wall -Wextra #-Werror
+CFLAGS			:= -Wall -Wextra -Werror -g# remove -g
 FT_PRINTF_DIR	:= $(LIB_DIR)/ft_printf
 FT_PRINTF		:= $(FT_PRINTF_DIR)/libftprintf.a
 MINILIBX_DIR	:= $(LIB_DIR)/mlx

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/20 15:23:27 by momrane           #+#    #+#             */
+/*   Updated: 2024/01/20 17:44:42 by momrane          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
@@ -45,4 +56,17 @@ int	ft_get_color(char *str)
 		i++;
 	}
 	return (nb);
+}
+
+void	ft_set_space(t_env *env)
+{
+	t_pt	top_rigth;
+	int		space;
+
+	top_rigth = ft_get_converted_point(env, env->rows - 1, env->cols - 1);
+	space = (env->width - top_rigth.x) / (env->cols + env->rows);
+	ft_printf("SPAACE = %d\n", space);
+	if (space < 1)
+		space = 1;
+	env->space = space;
 }

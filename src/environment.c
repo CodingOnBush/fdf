@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 11:56:50 by allblue          ###   ########.fr       */
+/*   Updated: 2024/01/20 17:18:43 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,42 @@ static int	ft_init_map_sizes(t_env *env)
 	return (1);
 }
 
-static void	ft_init_values(t_env *env)
+static void	ft_init_img_values(t_env *env)
 {
-	env->width = 1200;
-	env->height = 800;
-	env->angle = 5;
-	env->zoom = 20;
-	env->altitude = 1.3;
-	env->scale = 0.7;
-	env->space = 20;
-	env->origin.x = env->width / 2;
-	env->origin.y = env->height / 2;
+	env->img.img_ptr = NULL;
+	env->img.img_data = NULL;
+	env->img.bpp = 0;
+	env->img.endian = 0;
+	env->img.size_line = 0;
 }
 
-int	ft_init_env(t_env *env)
+void	ft_init_env_values(t_env *env, char *filename)
 {
-	ft_init_values(env);
-	ft_init_map_sizes(env);
+	env->mlx_ptr = NULL;
+	env->win_ptr = NULL;
+	env->filename = filename;
+	env->width = 1200;
+	env->height = 800;
+	env->angle = 10;
+	env->altitude = 1;
+	env->space = 0;
+	env->rows = 0;
+	env->cols = 0;
+	env->r = 0;
+	env->c = 0;
+	env->origin.x = env->width / 2;
+	env->origin.y = env->height / 2;
+	env->origin.z = 0;
+	ft_init_img_values(env);
+	env->mat = NULL;
+	env->map = NULL;
+}
+
+int	ft_init_env(t_env *env, char *filename)
+{
+	ft_init_env_values(env, filename);
+	if (ft_init_map_sizes(env) < 0)
+		return (-1);
 	env->mlx_ptr = mlx_init();
 	if (!env->mlx_ptr)
 		return (-1);
@@ -65,7 +84,6 @@ int	ft_init_env(t_env *env)
 	env->map = ft_new_matrix(env->rows, env->cols);
 	if (!env->map)
 		return (-1);
-	if (ft_init_map_sizes(env) < 0)
-		return (-1);
+	ft_init_img(env);
 	return (1);
 }

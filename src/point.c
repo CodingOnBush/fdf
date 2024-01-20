@@ -6,49 +6,35 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:47 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 03:15:03 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 17:49:50 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
-int	ft_get_new_x(t_env *env, int r, int c)
+t_pt	ft_get_converted_point(t_env *env, int r, int c)
 {
-	int	new_x;
-	int	x;
+	t_pt	out;
+	int		x;
+	int		y;
+	int		z;
 
-	if (env->data.matrix == NULL)
-		return (0);
-	x = env->data.matrix[r][c].x;
-	new_x = x + env->origin.x;
-	if (c < env->data.c)
-		new_x -= env->space * (env->data.c - c);
-	else if (c > env->data.c)
-		new_x += env->space * (env->data.col - c);
-	return (new_x);
-}
-
-int	ft_get_new_y(t_env *env, int r, int c)
-{
-	int	new_y;
-	int	y;
-
-	y = env->data.matrix[r][c].y;
-
-	new_y = y + env->origin.y;
-	if (r < env->data.r)
-		new_y -= env->space * (env->data.r - r);
-	else if (r > env->data.r)
-		new_y += env->space * (env->data.row - r);
-	return (new_y);
-}
-
-int	ft_get_new_z(t_env *env, int r, int c)
-{
-	int	new_z;
-	int	z;
-
-	z = env->data.matrix[r][c].z;
-	new_z = z * env->altitude;
-	return (new_z);
+	x = env->map[r][c].x;
+	y = env->map[r][c].y;
+	z = env->map[r][c].z;
+	if (c < env->c)
+		x += (env->c - c) * env->space;
+	else if (c > env->c)
+		x -= (c - env->c) * env->space;
+	if (r < env->r)
+		y += (env->r - r) * env->space;
+	else if (r > env->r)
+		y -= (r - env->r) * env->space;
+	out.x = x * cos(env->angle) - y * sin(env->angle);
+	out.y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - z * env->altitude;
+	out.x += env->origin.x;
+	out.y += env->origin.y;
+	out.z = z * env->altitude;
+	out.color = env->map[r][c].color;
+	return (out);
 }
