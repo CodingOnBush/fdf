@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 17:23:55 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 18:14:15 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+void	ft_draw_menu(t_env *env, t_pt p);
 
 t_pt	**ft_new_matrix(int r, int c);
 

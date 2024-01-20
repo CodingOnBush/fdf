@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 17:18:43 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 18:28:06 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_init_env_values(t_env *env, char *filename)
 	env->height = 800;
 	env->angle = 10;
 	env->altitude = 1;
-	env->space = 0;
+	env->space = 50;
 	env->rows = 0;
 	env->cols = 0;
 	env->r = 0;

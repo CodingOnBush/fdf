@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 17:32:39 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 18:40:04 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,8 @@ void	ft_draw(t_env *env)
 	ft_parse_matrix(env, ft_convert_points);
 	ft_clear_img(env);
 	ft_parse_matrix(env, ft_draw_dda);
+	// my_pixel_put(env, env->origin.x, env->origin.y, 0xFFFFFF);
+	// my_pixel_put(env, env->width - 100, 100, 0xFFFFFF);
+	
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.img_ptr, 0, 0);
 }
