@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 16:17:59 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 11:51:44 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_env
 	void				*mlx_ptr;
 	void				*win_ptr;
 	char				*address;
+	char				*filename;
 	int					width;
 	int					height;
 	float				angle;
@@ -52,10 +53,14 @@ typedef struct s_env
 	int					scale;
 	float				altitude;
 	int					space;
+	int					rows;
+	int					cols;
+	int					r;
+	int					c;
 	struct s_pt			origin;
-	struct s_parsing	data;
 	struct s_img		img;
 	struct s_pt			**mat;
+	struct s_pt			**map;
 }						t_env;
 
 #endif

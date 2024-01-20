@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/19 16:25:02 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 12:05:45 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,6 @@ static void	my_pixel_put(t_env *env, int x, int y, int color)
 {
 	char	*dst;
 
-	// int	offset;
-	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
-	// offset = (img->size_line * y) + (x * (img->bpp / 8));
-	// *((unsigned int *)(offset + img->img_data)) = color;
 	dst = env->img.img_data + (y * env->img.size_line + x * (env->img.bpp / 8));
 	*(unsigned int *)dst = color;
 }
@@ -84,9 +80,9 @@ void	draw_line_dda(t_env *env, t_pt pt1, t_pt pt2)
 
 static void	ft_draw_dda(t_env *env, int r, int c)
 {
-	if (c < env->data.col - 1)
+	if (c < env->cols - 1)
 		draw_line_dda(env, env->mat[r][c], env->mat[r][c + 1]);
-	if (r < env->data.row - 1)
+	if (r < env->rows - 1)
 		draw_line_dda(env, env->mat[r][c], env->mat[r + 1][c]);
 }
 
@@ -97,18 +93,15 @@ static void	ft_apply_transformation(t_env *env, int r, int c)
 	int y;
 	int z;
 
-	x = env->data.matrix[r][c].x * env->space;
-	y = env->data.matrix[r][c].y * env->space;
-	z = env->data.matrix[r][c].z * env->space;
+	x = env->map[r][c].x * env->space;
+	y = env->map[r][c].y * env->space;
+	z = env->map[r][c].z * env->space;
 	env->mat[r][c].x = x * cos(env->angle) - y * sin(env->angle);
 	env->mat[r][c].y = (x * sin(env->angle) + y * cos(env->angle)) / 2 - z * env->altitude;
-	
-	env->mat[r][c].x += env->origin.x - env->data.col;
-	env->mat[r][c].y += env->origin.y - env->data.row;
-	
-	env->mat[r][c].z = env->data.matrix[r][c].z;
-
-	env->mat[r][c].color = env->data.matrix[r][c].color + env->mat[r][c].z * 100;
+	env->mat[r][c].x += env->origin.x - env->cols;
+	env->mat[r][c].y += env->origin.y - env->rows;
+	env->mat[r][c].z = env->map[r][c].z;
+	env->mat[r][c].color = env->map[r][c].color + env->mat[r][c].z * 100;
 }
 
 // static void	ft_fill_new_matrix(t_env *env, t_pt **new)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
+/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:43 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 10:40:40 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/20 12:01:15 by allblue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static void	ft_print_matrix(t_env *env)
 	int	c;
 
 	r = 0;
-	while (r < env->data.row)
+	while (r < env->rows)
 	{
 		c = 0;
-		while (c < env->data.col)
+		while (c < env->cols)
 		{
-			ft_printf("%d ", env->data.matrix[r][c].z);
+			ft_printf("%d ", env->map[r][c].z);
 			c++;
 		}
 		ft_printf("\n");
@@ -38,16 +38,15 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		ft_exit_error("./fdf <filename>");
-	data = ft_start_parsing(av[1]);
-	if (ft_init_env(&env, data) < 0)
-	{
-		ft_free_env(&env);
-		ft_exit_error("environment init failed");
-	}
+	env.filename = av[1];
+	if (ft_init_env(&env) < 0)
+		return (ft_free_env_err(&env, "Error: mlx init failed"));
+	if (ft_parse_map(&env))
+		return (ft_free_env_err(&env, "Error: parsing failed"));
 	ft_trigger_hooks(&env);
 	ft_prep_img(&env);
 	ft_draw(&env);
 	mlx_loop(env.mlx_ptr);
-	ft_free_everything(&env, -1);
+	ft_free_env(&env);
 	return (0);
 }
