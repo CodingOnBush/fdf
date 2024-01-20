@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 10:09:09 by allblue          ###   ########.fr       */
+/*   Updated: 2024/01/20 10:40:20 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_win_cross(t_env *env)
 {
-	ft_free_everything(env);
+	ft_free_everything(env, 0);
 	exit(0);
 	return (0);
 }
@@ -50,7 +50,7 @@ static int ft_key_hook(int keycode, t_env *env)
 	}
 	if (keycode == XK_Escape)
 	{
-		ft_free_everything(env);
+		ft_free_everything(env, 0);
 		exit(0);
 	}
 	return (0);

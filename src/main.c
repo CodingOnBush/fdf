@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: allblue <allblue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:43 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 10:38:22 by allblue          ###   ########.fr       */
+/*   Updated: 2024/01/20 10:40:40 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 	t_parsing	data;
 	t_env		env;
 
-	if (ac == 2)
+	if (ac != 2)
 		ft_exit_error("./fdf <filename>");
 	data = ft_start_parsing(av[1]);
 	if (ft_init_env(&env, data) < 0)
