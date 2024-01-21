@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 18:28:06 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 12:27:44 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	ft_init_env_values(t_env *env, char *filename)
 	env->mlx_ptr = NULL;
 	env->win_ptr = NULL;
 	env->filename = filename;
-	env->width = 1200;
-	env->height = 800;
-	env->angle = 10;
-	env->altitude = 1;
-	env->space = 50;
+	env->width = 1980;
+	env->height = 1200;
+	env->angle = 44.4;//10;
+	env->altitude = 2.4;//1;
+	env->space = 4;//31;//4;//50;
 	env->rows = 0;
 	env->cols = 0;
 	env->r = 0;
@@ -75,7 +75,7 @@ int	ft_init_env(t_env *env, char *filename)
 	env->mlx_ptr = mlx_init();
 	if (!env->mlx_ptr)
 		return (-1);
-	env->win_ptr = mlx_new_window(env->mlx_ptr, env->width, env->height, "FDF");
+	env->win_ptr = mlx_new_window(env->mlx_ptr, env->width, env->height, filename);
 	if (!env->win_ptr)
 		return (-1);
 	env->mat = ft_new_matrix(env->rows, env->cols);

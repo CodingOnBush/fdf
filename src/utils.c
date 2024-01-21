@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 15:23:27 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/20 18:39:06 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 12:36:31 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_count_cols(char *line)
 			col++;
 			if (ft_strchr("+-", *line))
 				line++;
-			while (ft_isdigit(*line) || *line == ',')
+			while (ft_isdigit(*line) || ft_strchr(",xabcdefABCDEF", *line))
 				line++;
 		}
 		else
@@ -60,20 +60,18 @@ int	ft_get_color(char *str)
 
 void	ft_set_space(t_env *env)
 {
-	t_pt	top_rigth;
-	// int	refx;
-	// int	refy;
-	int		space;
+	// t_pt	topleft;
+	// t_pt	topright;
+	// t_pt	botleft;
+	// t_pt	botright;
 
-	// refx = env->width - 100;
-	// refy = 100;
-	
-	// if (refx )
+	// topleft = (t_pt){50, 50, 0, 0xFFFFFF};
+	// topright = (t_pt){50, env->width - 50, 0, 0xFFFFFF};
+	// botleft = (t_pt){env->height - 50, 50, 0, 0xFFFFFF};
+	// botright = (t_pt){env->height - 50, env->width - 50, 0, 0xFFFFFF};
 
-	top_rigth = ft_get_converted_point(env, env->rows - 1, env->cols - 1);
-	space = (env->width - top_rigth.x) / (env->cols + env->rows);
-	ft_printf("SPAACE = %d\n", space);
-	if (space < 1)
-		space = 1;
-	env->space = 20;
+	env->space = (env->width - 100) / (env->cols - 1);
+	if (env->space > (env->height - 100) / (env->rows - 1))
+		env->space = (env->height - 100) / (env->rows - 1);
+	printf("SPACE : %d\n", env->space);
 }
