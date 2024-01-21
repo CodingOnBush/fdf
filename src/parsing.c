@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 12:25:35 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_parse_map(t_env *env)
 	if (ft_parse(env) < 0)
 		return (-1);
 	// env->altitude = 10;
-	ft_set_space(env);
+	ft_set_zoom(env);
 	ft_parse_matrix(env, ft_move_map_points);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:24:05 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 12:38:49 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:53:38 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,37 +94,33 @@ static void	ft_convert_points(t_env *env, int r, int c)
 	int		x;
 	int		y;
 	int		z;
-	t_pt	middle;
 
-	x = env->map[r][c].x;
-	y = env->map[r][c].y;
+	x = env->map[r][c].x - env->map[env->rows / 2][env->cols / 2].x;
+	y = env->map[r][c].y - env->map[env->rows / 2][env->cols / 2].y;
 	z = env->map[r][c].z;
-	middle.x = x;
-	middle.y = y;
+	if (c < env->c)
+		x += (env->c - c) * env->zoom;
+	else if (c > env->c)
+		x -= (c - env->c) * env->zoom;
+	if (r < env->r)
+		y += (env->r - r) * env->zoom;
+	else if (r > env->r)
+		y -= (r - env->r) * env->zoom;
 	out.x = x * cosf(env->angle) - y * sinf(env->angle);
 	out.y = (x * sinf(env->angle) + y * cosf(env->angle)) / 2 - z * env->altitude;
-	
-	// printf("middle.x = %d\n", middle.x);
-	// printf("middle.y = %d\n", middle.y);
-
 	out.x += env->origin.x;
 	out.y += env->origin.y;
-	
-	// out.x = (out.x - env->origin.x) * env->space;
-	// out.y = (out.y - env->origin.y) * env->space;
 	out.z = z * env->altitude;
 	out.color = env->map[r][c].color * (z + 42);
 	env->mat[r][c] = out;
 }
 
-static void	ft_draw_square(t_env *env, int x, int y)
+static void	ft_draw_square(t_env *env, int x, int y, int color)
 {
 	int		i;
 	int		j;
-	int		color;
 
 	i = 0;
-	color = 0x00FF00;
 	x -= 10;
 	y -= 10;
 	while (i < 20)
@@ -141,17 +137,17 @@ static void	ft_draw_square(t_env *env, int x, int y)
 
 void	ft_draw(t_env *env)
 {
-	ft_set_space(env);
-	ft_parse_matrix(env, ft_move_map_points);
+	// ft_set_zoom(env);
+	// ft_parse_matrix(env, ft_move_map_points);
 	ft_parse_matrix(env, ft_convert_points);
 	ft_clear_img(env);
 	ft_parse_matrix(env, ft_draw_dda);
 	// my_pixel_put(env, env->origin.x, env->origin.y, 0xFFFFFF);
 	// my_pixel_put(env, env->mat[env->rows/2][env->cols/2].x, env->mat[env->rows/2][env->cols/2].y, 0xFF0000);
 	printf("ORIGIN : (%d, %d)\n", env->origin.x, env->origin.y);
-	ft_draw_square(env, env->origin.x, env->origin.y);
-	ft_draw_square(env, env->mat[0][0].x, env->mat[0][0].y);
-	ft_draw_square(env, env->mat[env->rows - 1][env->cols - 1].x, env->mat[env->rows - 1][env->cols - 1].y);
-	ft_draw_square(env, env->mat[env->rows / 2][env->cols / 2].x, env->mat[env->rows / 2][env->cols / 2].y);
+	ft_draw_square(env, env->origin.x, env->origin.y, 0xFF0000);
+	ft_draw_square(env, env->mat[0][0].x, env->mat[0][0].y, 0x00FF00);
+	ft_draw_square(env, env->mat[env->rows - 1][env->cols - 1].x, env->mat[env->rows - 1][env->cols - 1].y, 0x00FF00);
+	ft_draw_square(env, env->mat[env->rows / 2][env->cols / 2].x, env->mat[env->rows / 2][env->cols / 2].y, 0x00FF00);
 	mlx_put_image_to_window(env->mlx_ptr, env->win_ptr, env->img.img_ptr, 0, 0);
 }

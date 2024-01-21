@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 12:17:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 10:23:26 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_env
 	int					height;
 	float				angle;
 	float				altitude;
-	int					space;
+	int					zoom;
 	int					rows;
 	int					cols;
 	int					r;

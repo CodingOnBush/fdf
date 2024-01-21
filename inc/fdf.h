@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 12:00:42 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		ft_exit_error(char *str);
 void		ft_trigger_hooks(t_env *env);
 
 t_pt	ft_get_converted_point(t_env *env, int r, int c);
-void	ft_set_space(t_env *env);
+void	ft_set_zoom(t_env *env);
 
 // t_parsing	ft_start_parsing(char *filename);
 

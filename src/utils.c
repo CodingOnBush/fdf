@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 15:23:27 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 12:36:31 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	ft_get_color(char *str)
 	return (nb);
 }
 
-void	ft_set_space(t_env *env)
+void	ft_set_zoom(t_env *env)
 {
 	// t_pt	topleft;
 	// t_pt	topright;
@@ -70,8 +70,9 @@ void	ft_set_space(t_env *env)
 	// botleft = (t_pt){env->height - 50, 50, 0, 0xFFFFFF};
 	// botright = (t_pt){env->height - 50, env->width - 50, 0, 0xFFFFFF};
 
-	env->space = (env->width - 100) / (env->cols - 1);
-	if (env->space > (env->height - 100) / (env->rows - 1))
-		env->space = (env->height - 100) / (env->rows - 1);
-	printf("SPACE : %d\n", env->space);
+	env->zoom = (env->width - 100) / (env->cols - 1);
+	if (env->zoom > (env->height - 100) / (env->rows - 1))
+		env->zoom = (env->height - 100) / (env->rows - 1);
+	printf("zoom : %d\n", env->zoom);
+	env->zoom = 1;
 }

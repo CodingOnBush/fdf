@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:37:37 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 12:34:11 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,14 @@ static int ft_mouse_hook(int button, int x, int y, t_env *env)
 	(void)y;
 	if (button == 4)
 	{
-		env->space += 1;
-		printf("new space: %d\n", env->space);
+		env->zoom += 0.2;
+		printf("new zoom: %d\n", env->zoom);
 		ft_draw(env);
 	}
 	else if (button == 5)
 	{
-		env->space -= 1;
-		printf("new space: %d\n", env->space);
+		env->zoom -= 0.2;
+		printf("new zoom: %d\n", env->zoom);
 		ft_draw(env);
 	}
 	return (0);
