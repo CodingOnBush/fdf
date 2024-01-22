@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:28:38 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 13:51:14 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:01:59 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	ft_init_env_values(t_env *env, char *filename)
 	env->filename = filename;
 	env->width = 1600;
 	env->height = 900;
-	env->angle = 41.4;//10;
-	env->altitude = 1.2;//1;
-	env->zoom = 4;//31;//4;//50;
+	env->angle = 41.4;
+	env->altitude = 1.2;
+	env->zoom = 2;
 	env->rows = 0;
 	env->cols = 0;
 	env->r = 0;
@@ -67,15 +67,15 @@ void	ft_init_env_values(t_env *env, char *filename)
 	env->map = NULL;
 }
 
-int	ft_init_env(t_env *env, char *filename)
+int	ft_init_env(t_env *env, char *f)
 {
-	ft_init_env_values(env, filename);
+	ft_init_env_values(env, f);
 	if (ft_init_map_sizes(env) < 0)
 		return (-1);
 	env->mlx_ptr = mlx_init();
 	if (!env->mlx_ptr)
 		return (-1);
-	env->win_ptr = mlx_new_window(env->mlx_ptr, env->width, env->height, filename);
+	env->win_ptr = mlx_new_window(env->mlx_ptr, env->width, env->height, f);
 	if (!env->win_ptr)
 		return (-1);
 	env->mat = ft_new_matrix(env->rows, env->cols);

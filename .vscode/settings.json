@@ -1,19 +1,7 @@
 {
 	"files.associations": {
 		"fdf.h": "c",
-		"mlx42.h": "c",
-		"stdlib.h": "c",
-		"mlx.h": "c",
 		"ft_printf.h": "c",
-		"libft.h": "c",
-		"get_next_line.h": "c",
-		"unistd.h": "c",
-		"struct.h": "c",
-		"x.h": "c",
-		"keysym.h": "c",
-		"keysymdef.h": "c",
-		"stdio.h": "c",
-		"math.h": "c",
-		"mlx_int.h": "c"
+		"mlx.h": "c"
 	}
 }

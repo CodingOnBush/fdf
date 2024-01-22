@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 15:23:27 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:37:00 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,12 @@ int	ft_get_color(char *str)
 
 void	ft_set_zoom(t_env *env)
 {
-	// t_pt	topleft;
-	// t_pt	topright;
-	// t_pt	botleft;
-	// t_pt	botright;
-
-	// topleft = (t_pt){50, 50, 0, 0xFFFFFF};
-	// topright = (t_pt){50, env->width - 50, 0, 0xFFFFFF};
-	// botleft = (t_pt){env->height - 50, 50, 0, 0xFFFFFF};
-	// botright = (t_pt){env->height - 50, env->width - 50, 0, 0xFFFFFF};
-
-	env->zoom = (env->width - 100) / (env->cols - 1);
-	if (env->zoom > (env->height - 100) / (env->rows - 1))
-		env->zoom = (env->height - 100) / (env->rows - 1);
-	printf("zoom : %d\n", env->zoom);
-	env->zoom = 1;
+	if (env->rows > 499 || env->cols > 499)
+		env->zoom = 3;
+	else if (env->rows > 199 || env->cols > 199)
+		env->zoom = 10;
+	else if (env->rows > 99 || env->cols > 99)
+		env->zoom = 12;
+	else
+		env->zoom = 30;
 }

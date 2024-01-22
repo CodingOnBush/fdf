@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl_utils.c                                        :+:      :+:    :+:   */
+/*   ft_gnl_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 07:56:42 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/14 13:30:03 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:39:58 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,21 +99,3 @@ int	ft_lstchr(t_node *lst)
 	}
 	return (0);
 }
-
-// char	*ft_strchr(char *s, char c)
-// {
-// 	char			*ptr;
-
-// 	if (!s)
-// 		return (NULL);
-// 	ptr = (char *)s;
-// 	while (*ptr)
-// 	{
-// 		if (*ptr == c)
-// 			return (ptr);
-// 		ptr++;
-// 	}
-// 	if (*ptr == c)
-// 		return (ptr);
-// 	return (0);
-// }

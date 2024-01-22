@@ -6,22 +6,42 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:18:10 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/21 13:46:47 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/22 09:43:49 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/fdf.h"
 
+static int	ft_get_color_intensity(int value)
+{
+	int	red_intensity;
+	int	blue_intensity;
+	int	green_intensity;
+	int	color;
+
+	if (value < 0)
+		value = 0;
+	else if (value > 255)
+		value = 255;
+	red_intensity = value;
+	blue_intensity = 255 - value;
+	green_intensity = 255 - value;
+	color = (red_intensity << 16) | (green_intensity << 8) | blue_intensity;
+	return (color);
+}
+
 static int	ft_point_detected(t_env *env, char *line)
 {
 	int	i;
+	int	altitude;
 
 	i = 0;
 	if (ft_strchr("+-", line[i]))
 		i++;
 	env->map[env->r][env->c].x = env->c;
 	env->map[env->r][env->c].y = env->r;
-	env->map[env->r][env->c].z = ft_atoi(line);
+	altitude = ft_atoi(&line[i]);
+	env->map[env->r][env->c].z = altitude;
 	while (ft_isdigit(line[i]) && line[i] != '\0')
 		i++;
 	if (line[i] == ',')
@@ -32,7 +52,7 @@ static int	ft_point_detected(t_env *env, char *line)
 			i++;
 	}
 	else
-		env->map[env->r][env->c].color = 0xFFFFFF;
+		env->map[env->r][env->c].color = ft_get_color_intensity(altitude);
 	env->c++;
 	return (i);
 }
@@ -42,7 +62,7 @@ static void	ft_parse_line(t_env *env, char *line)
 	int	step;
 
 	step = 0;
-	while(*line)
+	while (*line)
 	{
 		if (ft_isdigit(*line) || ft_strchr("+-", *line))
 		{
@@ -58,8 +78,8 @@ static void	ft_parse_line(t_env *env, char *line)
 
 static int	ft_parse(t_env *env)
 {
-	char		*line;
-	int			fd;
+	char	*line;
+	int		fd;
 
 	fd = open(env->filename, O_RDONLY);
 	if (fd < 0)
@@ -86,8 +106,5 @@ int	ft_parse_map(t_env *env)
 		return (-1);
 	if (ft_parse(env) < 0)
 		return (-1);
-	// env->altitude = 10;
-	ft_set_zoom(env);
-	ft_parse_matrix(env, ft_move_map_points);
 	return (1);
 }

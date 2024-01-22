@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 15:04:12 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/15 09:38:27 by momrane          ###   ########.fr       */
+/*   Updated: 2024/01/22 10:03:48 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #  define BUFFER_SIZE 4096
 # endif
 
-# include <unistd.h>
-# include <stdlib.h>
 # include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_node
 {
@@ -27,15 +27,14 @@ typedef struct s_node
 	struct s_node	*next;
 }					t_node;
 
-char	*ft_gnl(int fd);
-int		ft_createlst(int fd, t_node **lst);
-void	ft_lstappend(t_node **lst, char *buff);
-void	ft_update_lst(t_node **lst);
-void	*ft_freelst(t_node **lst);
-char	*ft_create_str(t_node *lst);
-char	*ft_get_after_nl(char *str);
-// char	*ft_strchr(char *s, char c);
-int		ft_get_len(t_node *lst);
-int		ft_lstchr(t_node *lst);
+char				*ft_gnl(int fd);
+int					ft_createlst(int fd, t_node **lst);
+void				ft_lstappend(t_node **lst, char *buff);
+void				ft_update_lst(t_node **lst);
+void				*ft_freelst(t_node **lst);
+char				*ft_create_str(t_node *lst);
+char				*ft_get_after_nl(char *str);
+int					ft_get_len(t_node *lst);
+int					ft_lstchr(t_node *lst);
 
 #endif
