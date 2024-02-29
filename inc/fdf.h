@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 09:27:51 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/22 10:14:27 by momrane          ###   ########.fr       */
+/*   Updated: 2024/02/29 17:16:21 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <stdlib.h>
+
+# include <stdio.h>
 
 void	ft_draw_dda(t_env *env, int r, int c);
 
