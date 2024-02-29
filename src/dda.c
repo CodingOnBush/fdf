@@ -6,7 +6,7 @@
 /*   By: momrane <momrane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 09:47:20 by momrane           #+#    #+#             */
-/*   Updated: 2024/01/22 09:48:50 by momrane          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:55:31 by momrane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	ft_gradient(int c1, int c2, float factor)
 	g = (int)(((c1 >> 8) & 0xFF) + factor * (((c2 >> 8) & 0xFF)
 				- ((c1 >> 8) & 0xFF)));
 	b = (int)((c1 & 0xFF) + factor * ((c2 & 0xFF) - (c1 & 0xFF)));
-	return ((r << 16) | (g << 8) | b);
+	return ((r | g | b));
+	// return (1);
 }
 
 static float	ft_get_steps(float dx, float dy)
